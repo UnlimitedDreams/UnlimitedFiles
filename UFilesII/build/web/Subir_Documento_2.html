@@ -1,0 +1,66 @@
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>UnlimitedFiles-Solicion Corporativa</title>
+
+        <link  href = "bootstrap-3.3.4/css/bootstrap.css"  rel = "stylesheet" />
+        <script src="Jquery/jquery-1.11.2.js"></script>
+
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+        <script src="Jquery/jquery-1.11.2.js"></script>
+        <script>
+            $(document).ready(function() {
+                var option = 1;
+                $("#wrapper").hide();
+                $.post('FileDato', {
+                    opt: option
+                }, function(responseText) {
+                    $("#wrapper").show();
+                    $('#SubirDoc').html(responseText);
+                });
+            });
+
+
+        </script>
+
+    </head>
+    <body>
+        <nav  class = "navbar navbar-inverse navbar-fixed-top" > 
+            <div  class= "container-fluid" >
+                <div  class= "navbar-header" > 
+                    <a  class= "navbar-brand"  href= "#" > 
+                        <img src= "img/text3338.png" style="width: 30px; height: 30px;"/>
+                    </a> 
+                    <ul class="nav navbar-nav"> 
+                        <li> <a  href="https://www.facebook.com/sebazz.giraldo"><h5 style="color:#006400">Home</h5></a></li>
+                        <li><a href="http://getbootstrap.com/examples/starter-template/#"><h5 style="color:#006400">Productos</h5></a></li>
+                        <li><a href="http://getbootstrap.com/examples/starter-template/#"><h5 style="color:#006400">Contactos</h5></a></li>
+                    </ul>                 
+                </div> 
+            </div> 
+        </nav>
+
+
+    <center>
+        <h4>UnlimitedFiles</h4>
+        <h5>
+            Esta Seccion de Unlimited Files le permitira subir cualquier tipo de documento de una manera 
+            muy segura para su organizacion solo debe darle click
+        </h5>
+        <br><br>
+        <div id="SubirDoc"> 
+
+        </div>
+        <div id="option2"> 
+
+        </div>
+
+    </center>
+
+
+</body>
+</html>
