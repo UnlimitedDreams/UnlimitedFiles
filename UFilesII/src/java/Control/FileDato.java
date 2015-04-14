@@ -89,7 +89,7 @@ public class FileDato extends HttpServlet {
                         + "                        Descrip:Descripcion,\n"
                         + "                        Grupo:Grup\n"
                         + "                    }, function(responseText) {\n"
-                        //+ "                    $('#SubirDoc').html(responseText);"
+                        + "                    $('#SubirDoc').html(responseText);"
                         + "                    });\n"
                         + "                });\n"
                         + "            });"
@@ -151,49 +151,18 @@ public class FileDato extends HttpServlet {
 //            System.out.println("paso 2 " + gruppo[1]);
 //            gr.setAttribute("Cod", codigito);
             try {
-                out.println("<head>"
-                        + "        <link  href = \"bootstrap-3.3.4/css/bootstrap.css\"  rel = \"stylesheet\" ></link>\n"
-                        + "        <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js\"></script>\n"
-                        + "        <script src=\"http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js\"></script>"
-                        + "<script src=\"http://code.jquery.com/jquery.js\"></script>\n"
-                        + "<script src = \"bootstrap-3.3.4 / js / bootstrap.min.js\" ></script>"
-                        + "</head>");
-                out.println("<body>");
-                out.println("\n"
-                        + "                <div id=\"modal1\" class=\"modal fade bs-example-modal-lg\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myLargeModalLabel\" aria-hidden=\"true\">\n"
-                        + "                    <div class=\"modal-dialog modal-lg\">\n"
-                        + "                        <div class=\"modal-content\">\n"
-                        + "                            <div class=\"modal-header\">\n"
-                        + "                                <center><h1>SUBIR ARCHIVOS</h1></center> \n"
-                        + "                            </div>\n"
-                        + "                            <!-- contenido modal-->\n"
-                        + "                            <div class=\"modal-body\">\n"
-                        + "                                <center>\n"
-                        + "                                    <form action=\"file\" enctype=\"multipart/form-data\" method=\"post\">\n"
-                        + "                                        <table>\n"
-                        + "                                            <tr><td>  <img src=\"img/FilesUpload.png\" ></td></tr>\n"
-                        + "                                            <tr><td><input type=\"file\" name=\"archivo\"></td></tr>\n"
-                        + "                                        </table>\n"
-                        + "                                        <br>\n"
-                        + "                                            <input type=\"submit\"  class=\"btn btn-success\" value=\"Cargar\">\n"
-                        + "                                                </form>\n"
-                        + "                                                </center>\n"
-                        + "                                                </div>\n"
-                        + "                                                <div class=\"modal-footer\">\n"
-                        + "                                                    <button class=\"btn btn-primary\" data-dismiss=\"modal\">cerrar</button>\n"
-                        + "\n"
-                        + "                                                </div>\n"
-                        + "                                                </div>\n"
-                        + "                                                </div>\n"
-                        + "                                                </div>\n"
-                        + "");
-
-                out.println("</body>");
+                out.println("<form action=\"file\" enctype=\"multipart/form-data\" method=\"post\">\n"
+                        + "                            <table>\n"
+                        + "                                <tr><td>  <img src=\"img/FilesUpload.png\" ></td></tr>\n"
+                        + "                                <tr><td><input type=\"file\" name=\"archivo\"></td></tr>\n"
+                        + "                            </table>\n"
+                        + "                            <br>\n"
+                        + "                            <input type=\"submit\"  class=\"btn btn-success\" value=\"Cargar\">\n"
+                        + "                        </form>");
             } catch (Exception ex) {
 
             }
             //response.sendRedirect("Subir_Documento.html");
-            System.out.println("paso 4");
         }
 
     }

@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -114,6 +115,7 @@ public class Crear_Rol extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException {
         PrintWriter out = response.getWriter();
+        HttpSession Seccion_rol = request.getSession(true);
 
         response.setContentType("text/html;charset=UTF-8");
         String option = request.getParameter("opt");
@@ -125,12 +127,12 @@ public class Crear_Rol extends HttpServlet {
                 out.println("<html>");
                 out.println("<head>");
                 out.println(""
-//                        + "<script src=\"http://code.jquery.com/jquery.js\"></script>\n"
-//                        + "<script src = \"bootstrap-3.3.4 / js / bootstrap.min.js\" ></script><link  href = \"bootstrap-3.3.4/css/bootstrap.css\"  rel = \"stylesheet\" ></link>\n"
-//                        + "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js\"></script>\n"
-//                        + "<script src=\"http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js\"></script>"
-                        + "<script src=\"Jquery/jquery-1.11.2.js\"></script>\n"
-                        + "<script src=\"Js/alertify.min.js\"></script>\n");
+                        + "<script src=\"http://code.jquery.com/jquery.js\"></script>\n"
+                        + "<script src = \"bootstrap-3.3.4/js/bootstrap.min.js\" ></script>"
+                        + "<link  href = \"bootstrap-3.3.4/css/bootstrap.css\"  rel =\"stylesheet\" ></link>\n"
+                        + "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js\"></script>\n"
+                        + "<script src=\"http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js\"></script>"
+                        + "<script src=\"Jquery/jquery-1.11.2.js\"></script>\n");
                 out.println("<script>"
                         + " function borrar(codigo) {\n"
                         + "alert(\"Seguro que desea borrar \");"
@@ -141,19 +143,19 @@ public class Crear_Rol extends HttpServlet {
                         + "                        opt: option,\n"
                         + "                    }, function(responseText) {\n"
                         + "                        $(\"#Prueb\").html(responseText);\n"
-                        + "                        $(\"#row\").load(\"Crud_roles.html\");\n"
+                        + "                        $(\"#tabla\").load(\"Crud_roles.html\");\n"
                         + "                    });\n"
                         + "                });\n"
                         + "            }"
-                        + " function update(codigo) {\n"
+                        + " function update(codigo,nombre) {\n"
                         + "                $(document).ready(function() {\n"
                         + "                    var option = 4;\n"
                         + "                    $.post('Crear_Rol', {\n"
                         + "                        codigo_borrar: codigo,\n"
+                        + "                        Nombr: nombre,\n"
                         + "                        opt: option,\n"
                         + "                    }, function(responseText) {\n"
-                        + "                        $(\"#Prueb\").html(responseText);\n"
-                        + "                        $(\"#tabla\").load(\"Crud_roles.html\");\n"
+                        + "                        $(\"#Updat\").html(responseText);\n"
                         + "                    });\n"
                         + "                });\n"
                         + "            }"
@@ -162,7 +164,7 @@ public class Crear_Rol extends HttpServlet {
                 out.println("<body>");
 //                out.println("<div class=\"container\">");
                 out.println("<center>");
-                out.println("<table  ");
+                out.println("<table>");
                 out.println("<tr><td><h3>Codigo</h3></td><td><h3>Rol</h3></td>"
                         + "<td><h3>Borrar</h3></td><td><h3>Actualizar</h3></td></tr>");
                 Rol temp = null;
@@ -171,8 +173,8 @@ public class Crear_Rol extends HttpServlet {
                     out.println("<tr>");
                     out.println("<td>" + temp.getCodigo() + "</td>");
                     out.println("<td>" + temp.getDescripcion() + "</td>");
-                    out.println("<td><input type=\"button\" value=\"Borrar\" id=\"borr\" onclick=borrar(" + temp.getCodigo() + ")/></td>");
-                    out.println("<td><input type=\"button\"  class=\"btn btn-info\" value=\"Actualizar\"  onclick=update(" + temp.getCodigo() + ")/></td>");
+                    out.println("<td><input type=\"button\" class=\"btn btn-info\" value=\"Borrar\" id=\"borr\" onclick=borrar(" + temp.getCodigo() + ")></td>");
+                    out.println("<td><input type=\"button\"  class=\"btn btn-info\" value=\"Actualizar\"  onclick=update(" + temp.getCodigo() + ",'" + temp.getDescripcion() + "')></td>");
                     out.println("</tr>");
                 }
                 out.println("</table>");
@@ -242,7 +244,6 @@ public class Crear_Rol extends HttpServlet {
                 }
             }
         } else if (option.equalsIgnoreCase("3")) {
-
             String cod = request.getParameter("codigo_borrar");
             System.out.println("Entro a borrar " + cod);
             boolean borrado = delete(cod);
@@ -281,8 +282,55 @@ public class Crear_Rol extends HttpServlet {
             }
 
         } else if (option.equalsIgnoreCase("4")) {
-            String codigo = request.getParameter("codigo_borrar");
-            traer_rol(codigo);
+            String cod = request.getParameter("codigo_borrar");
+            String Nombre = request.getParameter("Nombr");
+            System.err.println("codigo " + cod + " nombre " + Nombre);
+            Seccion_rol.setAttribute("codigo", cod);
+            Seccion_rol.setAttribute("nombre", Nombre);
+            try {
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println(""
+                        + "<script src=\"http://code.jquery.com/jquery.js\"></script>\n"
+                        + "<script src = \"bootstrap-3.3.4/js/bootstrap.min.js\" ></script>"
+                        + "<link  href = \"bootstrap-3.3.4/css/bootstrap.css\"  rel =\"stylesheet\" ></link>\n"
+                        + "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js\"></script>\n"
+                        + "<script src=\"http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js\"></script>"
+                        + "<script src=\"Jquery/jquery-1.11.2.js\"></script>\n");
+                out.println("<script> $(document).ready(function() {\n"
+                        + "                    var option = 5;\n"
+                        + " var codigo=(\"#cod\").val();"
+                        + " var nombre=(\"#nom\").val();"
+                        + "                    $.post('Crear_Rol', {\n"
+                        + "                        codigo_borrar: codigo,\n"
+                        + "                        Nombr: nombre,\n"
+                        + "                        opt: option,\n"
+                        + "                    }, function(responseText) {\n"
+                        + "                        $(\"#tabla\").html(responseText);\n"
+                        + "                    });\n"
+                        + "                });"
+                        + "</script>");
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<table>");
+                out.println("<tr><td><h3>Codigo</h3></td><td><h3>Descripcion</h3></td></tr>");
+                out.println("<tr><td><input type=\"text\" id=\"cod\" value=" + cod + " disabled=\"\"> </td></h3>");
+                out.println("<td><input type=\"text\" id=\"nom\" value=" + Nombre + "></td></h3></tr>");
+                out.println("<table>");
+                out.println("<input type=\"button\" placeholder=\"Update\" class=\"form-control\" id=\"opt\"  style=\"width: 200px;\" /> \n"
+                        + "");
+
+                out.println("</body>");
+            } catch (Exception ex) {
+
+            }
+//            response.sendRedirect("Update.html");
+        } else if (option.equalsIgnoreCase("5")) {
+            String codigo = (String) Seccion_rol.getAttribute("codigo");
+            String nombr = (String) Seccion_rol.getAttribute("nombre");
+            System.err.println("recivi " + codigo + " y "+ nombr);
+
         }
         // Set response content type
 
