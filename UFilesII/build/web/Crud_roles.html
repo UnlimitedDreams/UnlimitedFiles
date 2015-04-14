@@ -1,45 +1,11 @@
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="utf-8">
         <title>UnlimitedFiles-Solicion Corporativa</title>
         <link  href = "bootstrap-3.3.4/css/bootstrap.css"  rel = "stylesheet" />
-
-
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
-
-        <script src="Jquery/jquery-1.11.2.js"></script>
-        <script>
-            $(document).ready(function() {
-                var option = 1;
-                $.post('Crear_Rol', {
-                    opt: option,
-                }, function(responseText) {
-                    $('#tabla').html(responseText);
-                });
-
-                $("#submit").click(function(event) {
-                    var Can = $("#nom").val();
-                    var optio = 2;
-                    $.post('Crear_Rol', {
-                        Nombre: Can,
-                        opt: optio,
-                    }, function(responseText) {
-                        $('#respon2').html(responseText);
-                         $("#row").load("Crud_roles.html");
-                        //alert("recivio"+optio);
-                    });
-                });
-            });
-
-        </script>
     </head>
+    
     <body>
-
-
-
         <nav  class = "navbar navbar-inverse navbar-fixed-top" > 
             <div  class= "container-fluid" >
                 <div  class= "navbar-header" > 
@@ -54,14 +20,11 @@
                 </div> 
             </div> 
         </nav>
-
         <br>
         <br>
         <br>
         <br>
         <br>
-
-
         <div class="container">
             <div class="row">
                 <center>
@@ -71,18 +34,13 @@
                         muy segura para su organizacion solo debe darle click
                     </h5>
                     <br><br>
-
                     <div id="tabla">
-
                     </div>
                     <br>
                     <br>
-
                     <a href="#modal1" class="btn btn-success"  data-toggle="modal" >Agregar</a>
                     <a href="Crear_rol.html">Crear</a>
-
                 </center>
-
             </div>
         </div>
         <div id="modal1" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -105,23 +63,40 @@
                                         </td>    
                                     </tr> 
                                 </table>
-
                             </center>
                             <center>   <a href="#"  id="submit" class="btn btn-success"  data-toggle="modal" >Crear</a></center> 
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-primary" data-dismiss="modal">cerrar</button>
-
                     </div>
                 </div>
-
-
             </div>
         </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                var option = 1;
+                $.post('Crear_Rol', {
+                    opt: option,
+                }, function (responseText) {
+                    $('#tabla').html(responseText);
+                });
 
-        <script src="http://code.jquery.com/jquery.js"></script>
-        <script src = "bootstrap-3.3.4 / js / bootstrap.min.js" ></script>
-
+                $("#submit").click(function (event) {
+                    var Can = $("#nom").val();
+                    var optio = 2;
+                    $.post('Crear_Rol', {
+                        Nombre: Can,
+                        opt: optio,
+                    }, function (responseText) {
+                        $('#respon2').html(responseText);
+                        $("#row").load("Crud_roles.html");
+                        //alert("recivio"+optio);
+                    });
+                });
+            });
+        </script>
     </body>
 </html>

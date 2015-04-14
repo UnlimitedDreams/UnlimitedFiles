@@ -1,40 +1,14 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<xhtml xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <h:head>
         <title>Unlimited Files</title>
 
         <!-- css -->
         <link href="css/bootstrap.min.css" rel="stylesheet" />
-        <link href="css/jcarousel.css" rel="stylesheet" />
-
-
         <link  href = "bootstrap-3.3.4/css/bootstrap.css"  rel = "stylesheet" ></link>
-
-
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
-
-        <script src="Jquery/jquery-1.11.2.js"></script>
-        <script>
-            $(document).ready(function() {
-                var option = 1;
-                $("#wrapper").hide();
-                $.post('FileDato', {
-                    opt: option
-                }, function(responseText) {
-                    $("#wrapper").show();
-                    $('#SubirDoc').html(responseText);
-                });
-            });
-
-
-        </script>
-
     </h:head>
 
     <h:body>
@@ -56,10 +30,7 @@
 
 
         <div class="jumbotron3" >
-
-
         </div>
-
         <div class="jumbotron2" >
             <div class="container">
 
@@ -71,12 +42,9 @@
         <br></br>
 
         <div class="container">
-
-
             <div class="row">
                 <br></br>
                 <center><h1>SUBIR ARCHIVO</h1>
-
                     <h4>Esta Seccion de Unlimited Files le permitira subir cualquier tipo de documento de una manera 
                         muy segura para su organizacion solo debe darle click </h4>
                     <br></br>
@@ -111,7 +79,7 @@
                         </table> 
                         <br></br>
                         <a href="#modal1" class="btn btn-success"  data-toggle="modal" >Agregar</a> 
-                </form></center>
+                    </form></center>
 
                 <div id="modal1" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
@@ -127,30 +95,35 @@
                                             <tr><td>  <img src="img/FilesUpload.png" ></td></tr>
                                             <tr><td><input type="file" name="archivo"></td></tr>
                                         </table>
-                                        <br>
-                                            <input type="submit"  class="btn btn-success" value="Cargar">
-                                                </form>
-                                                </center>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button class="btn btn-primary" data-dismiss="modal">cerrar</button>
+                                        <br/>
+                                        <input type="submit"  class="btn btn-success" value="Cargar">
+                                    </form>
+                                </center>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" data-dismiss="modal">cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="Jquery/jquery-1.11.2.js"></script>
+        <script>
+            $(document).ready(function () {
+                var option = 1;
+                $("#wrapper").hide();
+                $.post('FileDato', {
+                    opt: option
+                }, function (responseText) {
+                    $("#wrapper").show();
+                    $('#SubirDoc').html(responseText);
+                });
+            });
 
-                                                </div>
-                                                </div>
-                                                </div>
-                                                </div>
 
-
-
-                                                </div>
-
-
-
-                                                </div>
-
-
-
-                                                <script src="http://code.jquery.com/jquery.js"></script>
-                                                <script src = "bootstrap-3.3.4 / js / bootstrap.min.js" ></script>
-                                                </h:body>
-                                                </html>
+        </script>                                            
+    </h:body>
+</xhtml>

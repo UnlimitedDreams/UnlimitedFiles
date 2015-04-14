@@ -2,31 +2,7 @@
     <head>
         <meta charset="utf-8">
         <title>UnlimitedFiles-Solicion Corporativa</title>
-
         <link  href = "bootstrap-3.3.4/css/bootstrap.css"  rel = "stylesheet" />
-        <script src="Jquery/jquery-1.11.2.js"></script>
-
-
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
-        <script src="Jquery/jquery-1.11.2.js"></script>
-        <script>
-            $(document).ready(function() {
-                var option = 1;
-                $("#wrapper").hide();
-                $.post('FileDato', {
-                    opt: option
-                }, function(responseText) {
-                    $("#wrapper").show();
-                    $('#SubirDoc').html(responseText);
-                });
-            });
-
-
-        </script>
-
     </head>
     <body>
         <nav  class = "navbar navbar-inverse navbar-fixed-top" > 
@@ -43,8 +19,6 @@
                 </div> 
             </div> 
         </nav>
-
-
     <center>
         <h4>UnlimitedFiles</h4>
         <h5>
@@ -53,14 +27,24 @@
         </h5>
         <br><br>
         <div id="SubirDoc"> 
-
         </div>
         <div id="option2"> 
-
         </div>
-
     </center>
-
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="Jquery/jquery-1.11.2.js"></script>
+        <script>
+            $(document).ready(function() {
+                var option = 1;
+                $("#wrapper").hide();
+                $.post('FileDato', {
+                    opt: option
+                }, function(responseText) {
+                    $("#wrapper").show();
+                    $('#SubirDoc').html(responseText);
+                });
+            });
+        </script>
 </body>
 </html>
