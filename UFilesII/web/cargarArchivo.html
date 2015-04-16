@@ -78,9 +78,21 @@
                             </tr>
                         </table> 
                         <br></br>
-                        <a href="#modal1" class="btn btn-success"  data-toggle="modal" >Agregar</a> 
+                        <a href="#modal1"  class="btn btn-success"  data-toggle="modal" onclick="mn()">Agregar</a> 
                     </form></center>
+                <script>
 
+                    function mn(codigo) {
+                        $(document).ready(function() {
+                            var option = 7;
+                            $.post('Usuarios', {
+                                opt: option,
+                                codi: codigo,
+                            }, function(responseText) {
+                            });
+                        });
+                    }
+                </script>
                 <div id="modal1" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -90,14 +102,10 @@
                             <!-- contenido modal-->
                             <div class="modal-body">
                                 <center>
-                                    <form action="file" enctype="multipart/form-data" method="post">
-                                        <table>
-                                            <tr><td>  <img src="img/FilesUpload.png" ></td></tr>
-                                            <tr><td><input type="file" name="archivo"></td></tr>
-                                        </table>
-                                        <br/>
-                                        <input type="submit"  class="btn btn-success" value="Cargar">
-                                    </form>
+                                    <input type="text" name="DNI" id="DNI" value=""/>
+                                    <% 
+                                    String msg = (String)session.getAttribute("codigo"); 
+                                    %>
                                 </center>
                             </div>
                             <div class="modal-footer">
@@ -111,19 +119,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <script src="Jquery/jquery-1.11.2.js"></script>
-        <script>
-            $(document).ready(function () {
-                var option = 1;
-                $("#wrapper").hide();
-                $.post('FileDato', {
-                    opt: option
-                }, function (responseText) {
-                    $("#wrapper").show();
-                    $('#SubirDoc').html(responseText);
-                });
-            });
 
-
-        </script>                                            
     </h:body>
 </xhtml>
