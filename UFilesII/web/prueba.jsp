@@ -19,15 +19,14 @@
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
         <script>
-            $(document).ready(function () {
-                var option = 3;
-                $.post('Usuarios', {
+                    $(document).ready(function () {
+            var option = 3;
+                    $.post('Usuarios', {
                     opt: option,
-                }, function (responseText) {
+                    }, function (responseText) {
                     $('#tabla_usuarios').html(responseText);
-                });
-            });
-        </script>
+                    });
+            });        </script>
     </head>
 
     <body>
@@ -60,79 +59,79 @@
                     muy segura para su organizacion solo debe darle click
                 </h5>
             </center>
-           
+
             <br/><br/>
             <div  id="tabla_usuarios">
 
- <center> 
-                <br/><br/><br/>
-                <table>
-                    <%
-                        Mis_usuarios = new Usuario().Traer_Usuarios(Mis_usuarios);
-                        Usuario temp = null;
-                        for (int i = 0; i < Mis_usuarios.size(); i++) {
-                            temp = (Usuario) Mis_usuarios.get(i);
-                            out.println("<tr>");
-                            out.println("<td>" + temp.getCedula() + "</td>");
-                            out.println("<td>" + temp.getNombre() + "</td>");
-                            out.println("<td>" + temp.getApellido() + "</td>");
-                            out.println("<td>" + temp.getFecha_naci() + "</td>");
-                            out.println("<td>" + temp.getSexo() + "</td>");
-                            out.println("<td><input type=\"button\" class=\"btn btn-info\" value=\"Borrar\" id=\"borr\" onclick=borrar(" + temp.getCedula() + ")></td>");
-                            out.println("<td><input type=\"button\"  class=\"btn btn-info\" value=\"Actualizar\"  onclick=update(" + temp.getCedula() + ")></td>");
-                            out.println("</tr>");
-                        }
-                        control.cerrarConexion();
-                    %>
-                </table>
-            </center>
+                <center> 
+                    <br/><br/><br/>
+                    <table>
+                        <%
+                            Mis_usuarios = new Usuario().Traer_Usuarios(Mis_usuarios);
+                            Usuario temp = null;
+                            for (int i = 0; i < Mis_usuarios.size(); i++) {
+                                temp = (Usuario) Mis_usuarios.get(i);
+                                out.println("<tr>");
+                                out.println("<td>" + temp.getCedula() + "</td>");
+                                out.println("<td>" + temp.getNombre() + "</td>");
+                                out.println("<td>" + temp.getApellido() + "</td>");
+                                out.println("<td>" + temp.getFecha_naci() + "</td>");
+                                out.println("<td>" + temp.getSexo() + "</td>");
+                                out.println("<td><input type=\"button\" class=\"btn btn-info\" value=\"Borrar\" id=\"borr\" onclick=borrar(" + temp.getCedula() + ")></td>");
+                                out.println("<td><input type=\"button\"  class=\"btn btn-info\" value=\"Actualizar\"  onclick=update(" + temp.getCedula() + ")></td>");
+                                out.println("</tr>");
+                            }
+                            control.cerrarConexion();
+                        %>
+                    </table>
+                </center>
                 <script src="Jquery/jquery-1.11.2.js"></script>
 
-<<<<<<< .mine
+                <<<<<<< .mine
                 <script> function borrar(codigo) {
-                confirm("Seguro que desea borrar ");
-            $(document).ready(function () {
-                    var option = 4;                 $.post('Usuarios', {
-=======
-                    <script src="Jquery/jquery-1.11.2.js"></script>
+                    confirm("Seguro que desea borrar ");
+                            $(document).ready(function () {
+                    var option = 4; $.post('Usuarios', {
+                    === === =
+                            < script src = "Jquery/jquery-1.11.2.js" ></script>
 
-                    <script>
-            function borrar(codigo) {
-                alert("Seguro que desea borrar ");
-                $(document).ready(function () {
-                    var option = 4;
-                    $.post('Usuarios', {
->>>>>>> .r11
-                        codigo_borrar: codigo,
-                        opt: option,
-                    }, function (responseText) {
-                        $("#Prueb_usu").html(responseText);
-                        $("#tabla_usuarios").load("Crud_usuarios.html");
-                });
-                    });
-        }
-            function update(codigo) {
-<<<<<<< .mine
-            $(document).ready(function () {
-                var option = 5;
-=======
-                $(document).ready(function () {
-                    var option = 5;
->>>>>>> .r11
-                    $.post('Usuarios', {
-                    codigo_borrar: codigo,
-                        opt: option,
-<<<<<<< .mine
-                        }, function (responseText) {
-                    $("#tabla_usuarios").hide();
-=======
-                    }, function (responseText) {
-                        $("#tabla_usuarios").hide();
->>>>>>> .r11
-                        $("#Updat_usu").html(responseText);
-                        });
-            });
-        }</script>
+                <script>
+                                    function borrar(codigo) {
+                                    alert("Seguro que desea borrar ");
+                                            $(document).ready(function () {
+                                    var option = 4;
+                                            $.post('Usuarios', {
+                                            >>> >>> > .r11
+                                                    codigo_borrar: codigo,
+                                                    opt: option,
+                                            }, function (responseText) {
+                                            $("#Prueb_usu").html(responseText);
+                                                    $("#tabla_usuarios").load("Crud_usuarios.html");
+                                            });
+                                    });
+                                    }
+                            function update(codigo) {
+                            << << << < .mine
+                                    $(document).ready(function () {
+                            var option = 5;
+                                    === === =
+                                    $(document).ready(function () {
+                            var option = 5;
+                                    >>> >>> > .r11
+                                    $.post('Usuarios', {
+                                    codigo_borrar: codigo,
+                                            opt: option,
+                                            << << << < .mine
+                                    }, function (responseText) {
+                                    $("#tabla_usuarios").hide();
+                                            === === =
+                                    }, function (responseText) {
+                                    $("#tabla_usuarios").hide();
+                                            >>> >>> > .r11
+                                            $("#Updat_usu").html(responseText);
+                                    });
+                            });
+                            }</script>
 
 
 
