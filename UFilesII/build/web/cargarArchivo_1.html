@@ -1,0 +1,30 @@
+
+<html> 
+    <body>	
+        <input type=text id=DatoPadre1 /> 
+        <input type=text id=DatoPadre2 /> 
+        <input type=text id=DatoPadre3 /> 
+        <br/> 
+        <input type='button' onclick="AbreVentanaModal()" value="Modificar"/> 
+    </body> 
+
+    <script>
+    //creamos una variable de tipo array para pasar y recuperar los datos 
+        var datos = new Array();
+
+        function AbreVentanaModal() {
+            datos[0] = DatoPadre1.value;
+            datos[1] = DatoPadre2.value;
+            datos[2] = DatoPadre3.value;
+            
+
+    //aqui paso los datos a la ventana hija 
+            datos = showModalDialog('hija.html', datos, 'status:no;resizable:yes');
+
+    //aqui recuepero datos de la ventana hija 
+            DatoPadre1.value = datos[0];
+            DatoPadre2.value = datos[1];
+            DatoPadre3.value = datos[2];
+        }
+    </script> 
+</html> 

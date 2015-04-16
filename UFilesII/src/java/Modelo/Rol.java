@@ -6,6 +6,9 @@
 
 package Modelo;
 
+import Control.control;
+import java.util.ArrayList;
+
 /**
  *
  * @author USR_Toshiba
@@ -18,6 +21,10 @@ public class Rol {
         this.codigo = codigo;
         this.descripcion = descripcion;
     }
+
+    public Rol() {
+    }
+    
 
     public int getCodigo() {
         return codigo;
@@ -40,5 +47,23 @@ public class Rol {
         return "Rol{" + "codigo=" + codigo + ", descripcion=" + descripcion + '}';
     }
     
-    
+     public ArrayList cargar_rol(ArrayList x) throws ClassNotFoundException{
+        x.clear();
+        Control.control.conectar();
+        control.ejecuteQuery("select * from rol where estado='Activo'");
+        int cod = 0;
+        String nom = "";
+        try {
+            while (control.rs.next()) {
+                cod = control.rs.getInt(1);
+                nom = control.rs.getString(2);
+                x.add(new Grupo(cod, nom));
+            }
+            System.err.println("cargo " + x.size());
+        } catch (Exception ex) {
+
+        }
+        return x;
+    }
 }
+

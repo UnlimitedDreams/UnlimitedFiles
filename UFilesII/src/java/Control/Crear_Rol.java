@@ -39,7 +39,7 @@ public class Crear_Rol extends HttpServlet {
     public boolean insertar_rol(String nombre) throws ClassNotFoundException {
         control.conectar();
         int codigo = Secuencias.Sequen("select max(cod_rol) from rol");
-        boolean r = control.ejecuteUpdate("insert into rol values(" + codigo + ",'" + nombre + "')");
+        boolean r = control.ejecuteUpdate("insert into rol values(" + codigo + ",'" + nombre + "','Activo')");
         return r;
     }
 
@@ -79,21 +79,6 @@ public class Crear_Rol extends HttpServlet {
 //    public void Borrar_rol(String codigo) throws ClassNotFoundException {
 //
 //    }
-
-    public boolean delete(String codigo) throws ClassNotFoundException {
-        control.conectar();
-        boolean Rol_delete = false;
-        if (verificar_rol(codigo) == true) {
-            Rol_delete = false;
-        } else {
-            Rol_delete = control.ejecuteUpdate("delete from rol where cod_rol=" + codigo);
-            System.err.println("rol  " + Rol_delete);
-
-        }
-
-        return Rol_delete;
-
-    }
 
     public void Traer_rol() throws ClassNotFoundException {
         roles.clear();
@@ -188,101 +173,18 @@ public class Crear_Rol extends HttpServlet {
                 out.close();
             }
         } else if (option.equalsIgnoreCase("2")) {
-            String nombre = request.getParameter("Nombre");
+            String nombre = request.getParameter("Codigo_rol");
             boolean r = insertar_rol(nombre);
-            if (r) {
-                try {
-                    /* TODO output your page here. You may use following sample code. */
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<script src=\"Jquery/jquery-1.11.2.js\"></script>\n"
-                            + "        <script src=\"js/alertify.min.js\"></script>\n"
-                            + "        <link rel=\"stylesheet\" href=\"Css/Notificacion/alertify.bootstrap.css\" />\n"
-                            + "        <link rel=\"stylesheet\" href=\"Css/Notificacion/alertify.default.css\" />\n"
-                            + "        <link rel=\"stylesheet\" href=\"Css/Notificacion/alertify.core.css\" />\n"
-                            + "");
-                    out.println("<script>$(document).ready(function() {\n"
-                            + "                        alertify.success(\"Rol Guardado\");\n"
-                            + "            });</script>");
-                    out.println("</head>");
-                    out.println("<body>");
-                    //out.println("Ok");
-                    out.println("</body>");
-                    out.println("</html>");
-                    // response.sendRedirect("Crud_roles.html");
-                } finally {
-                    out.close();
-                }
-            } else {
-                try {
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-//                    out.println("<script src=\"Jquery/jquery-1.11.2.js\"></script>\n"
-//                            + "        <script src=\"Js/alertify.min.js\"></script>\n"
-//                            + "        <link rel=\"stylesheet\" href=\"Css/alertify.bootstrap.css\" />\n"
-//                            + "        <!-- include a theme, can be included into the core instead of 2 separate files -->\n"
-//                            + "        <link rel=\"stylesheet\" href=\"Css/alertify.default.css\" />\n"
-//                            + "        <link rel=\"stylesheet\" href=\"Css/alertify.core.css\" />\n"
-//                            + "");
-//                    out.println("<script>$(document).ready(function() {\n"
-//                            //                    + "                alertify.prompt(\"Esto es un <b>prompt</b>, introduce un valor:\", function(e, str) {\n"
-//                            //                    + "                    if (e) {\n"
-//                            + " alertify.error(\"Has pulsado '\" + alertify.labels.cancel + \"'\");"
-//                            //                    + "                    } else {\n"
-//                            //                    + "                        alertify.error(\"Has pulsado '\" + alertify.labels.cancel + \"'\");\n"
-//                            //                    + "                    }\n"
-//                            //                    + "                });\n"
-//                            + "            });</script>");
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("Ok");
-                    out.println("</body>");
-                    out.println("</html>");
-                } finally {
-                    out.close();
-                }
-            }
+
         } else if (option.equalsIgnoreCase("3")) {
             String cod = request.getParameter("codigo_borrar");
             System.out.println("Entro a borrar " + cod);
-            boolean borrado = delete(cod);
-            if (borrado == true) {
-                try {
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-//                    out.println("<script src=\"Jquery/jquery-1.11.2.js\"></script>\n"
-//                            + "        <script src=\"Js/alertify.min.js\"></script>\n"
-//                            + "        <link rel=\"stylesheet\" href=\"Css/alertify.bootstrap.css\" />\n"
-//                            + "        <!-- include a theme, can be included into the core instead of 2 separate files -->\n"
-//                            + "        <link rel=\"stylesheet\" href=\"Css/alertify.default.css\" />\n"
-//                            + "        <link rel=\"stylesheet\" href=\"Css/alertify.core.css\" />\n"
-//                            + "");
-//                    out.println("<script>$(document).ready(function() {\n"
-//                            //                    + "                alertify.prompt(\"Esto es un <b>prompt</b>, introduce un valor:\", function(e, str) {\n"
-//                            //                    + "                    if (e) {\n"
-//                            + " alertify.error(\"Has pulsado '\" + alertify.labels.cancel + \"'\");"
-//                            //                    + "                    } else {\n"
-//                            //                    + "                        alertify.error(\"Has pulsado '\" + alertify.labels.cancel + \"'\");\n"
-//                            //                    + "                    }\n"
-//                            //                    + "                });\n"
-//                            + "            });</script>");
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("Borrado");
-                    out.println("</body>");
-                    out.println("</html>");
-                } finally {
-                    out.close();
-                }
-            } else {
-                System.err.println("No borrado");
+            control.conectar();
+            control.ejecuteUpdate("update rol set estado='Inactivo' where cod_rol=" + cod);
+            control.cerrarConexion();
 
-            }
-
-        } else if (option.equalsIgnoreCase("4")) {
+        } else if (option.equalsIgnoreCase(
+                "4")) {
             String cod = request.getParameter("codigo_borrar");
             String Nombre = request.getParameter("Nombr");
             System.err.println("codigo " + cod + " nombre " + Nombre);
@@ -310,6 +212,8 @@ public class Crear_Rol extends HttpServlet {
                         + "                        opt: option,\n"
                         + "                    }, function(responseText) {\n"
                         + "                        $(\"#tabla\").html(responseText);\n"
+                        + "                            window.location.reload();\n"
+                        + ""
                         + "                    });\n"
                         + "                });"
                         + "                });"
@@ -329,14 +233,13 @@ public class Crear_Rol extends HttpServlet {
 
             }
 //            response.sendRedirect("Update.html");
-        } else if (option.equalsIgnoreCase("5")) {
+        } else if (option.equalsIgnoreCase(
+                "5")) {
             String codigo = request.getParameter("codigo_borrar");
             String nombr = request.getParameter("Nombr");
             System.err.println("recivi " + codigo + " y " + nombr);
             control.conectar();
             control.ejecuteUpdate("update  rol set descripcion='" + nombr + "' where cod_rol=" + codigo);
-            response.sendRedirect("Crud_roles.html");
-         
 
         }
         // Set response content type

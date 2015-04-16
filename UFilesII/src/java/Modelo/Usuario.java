@@ -94,4 +94,10 @@ public class Usuario {
 
         return Mis_usuarios;
     }
+
+    public void borrar(String cod) throws ClassNotFoundException {
+        System.err.println("Entro a borrar " +cod);
+        control.conectar();
+        control.ejecuteUpdate("update persona set estado='Inactivo' where cedula=" + cod);
+    }
 }

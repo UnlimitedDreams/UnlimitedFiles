@@ -1,3 +1,10 @@
+<%-- 
+    Document   : Prueba_modal
+    Created on : 16/04/2015, 10:34:55 AM
+    Author     : USR_Toshiba
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <xhtml xmlns="http://www.w3.org/1999/xhtml"
@@ -78,7 +85,7 @@
                             </tr>
                         </table> 
                         <br></br>
-                        <a href="#modal1"  class="btn btn-success"  data-toggle="modal" onclick="mn()">Agregar</a> 
+                        <a href="#modal1"  class="btn btn-success"  data-toggle="modal" onclick="mn(67)">Agregar</a> 
                     </form></center>
                 <script>
 
@@ -103,8 +110,14 @@
                             <div class="modal-body">
                                 <center>
                                     <input type="text" name="DNI" id="DNI" value=""/>
-                                    <% 
-                                    String msg = (String)session.getAttribute("codigo"); 
+
+                                    <%
+                                        String nom = (String) session.getAttribute("Usuario_nombre");
+                                        String ape = (String) session.getAttribute("Usuario_Apellido");
+
+                                        out.println("<h1>" + nom + "</h1>");
+                                        out.println("<h1>" + ape + "</h1>");
+
                                     %>
                                 </center>
                             </div>
@@ -122,3 +135,4 @@
 
     </h:body>
 </xhtml>
+

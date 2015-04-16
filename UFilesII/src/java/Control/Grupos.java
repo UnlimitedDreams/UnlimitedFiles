@@ -5,7 +5,6 @@ package Control;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import Modelo.Grupo;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,12 +24,13 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(urlPatterns = {"/Grupos"})
 public class Grupos extends HttpServlet {
-ArrayList<Grupo> grup=new ArrayList();
- 
+
+    ArrayList<Grupo> grup = new ArrayList();
+
     public boolean insertar_Grupo(String nombre) throws ClassNotFoundException {
         control.conectar();
         int codigo = Secuencias.Sequen("select max(idgrupo) from grupo");
-        boolean r = control.ejecuteUpdate("insert into grupo values(" + codigo + ",'" + nombre + "')");
+        boolean r = control.ejecuteUpdate("insert into grupo values(" + codigo + ",'" + nombre + "','Activo')");
         return r;
     }
 
@@ -38,38 +38,39 @@ ArrayList<Grupo> grup=new ArrayList();
             throws ServletException, IOException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        HttpSession Sesion_grupo = request.getSession(true);
 
-        String descrip = request.getParameter("Nombre");
-        boolean r = insertar_Grupo(descrip);
+        String opt = request.getParameter("opt");
+        if (opt.equalsIgnoreCase("1")) {
+            String codigo = request.getParameter("codigo_borrar");
+            System.err.println("Entro a borrrar el codigo " + codigo);
+            control.conectar();
+            control.ejecuteUpdate("update grupo set estado='Inactivo' where idgrupo=" + codigo);
+            control.cerrarConexion();
+        } else if (opt.equalsIgnoreCase("2")) {
+            String descripcion_gruppo = request.getParameter("des");
+            System.err.println("entro " + descripcion_gruppo);
+            boolean r = insertar_Grupo(descripcion_gruppo);
+            try {
+                out.println("entro ok");
+            } catch (Exception ex) {
 
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<script src=\"Jquery/jquery-1.11.2.js\"></script>\n"
-                    + "        <script src=\"Js/alertify.min.js\"></script>\n"
-                    + "        <link rel=\"stylesheet\" href=\"Css/alertify.bootstrap.css\" />\n"
-                    + "        <!-- include a theme, can be included into the core instead of 2 separate files -->\n"
-                    + "        <link rel=\"stylesheet\" href=\"Css/alertify.default.css\" />\n"
-                    + "        <link rel=\"stylesheet\" href=\"Css/alertify.core.css\" />\n"
-                    + "");
-            out.println("<script>$(document).ready(function() {\n"
-//                    + "                alertify.prompt(\"Esto es un <b>prompt</b>, introduce un valor:\", function(e, str) {\n"
-//                    + "                    if (e) {\n"
-                    + "                        alertify.success(\"Grupo Guardado\");\n"
-//                    + "                    } else {\n"
-//                    + "                        alertify.error(\"Has pulsado '\" + alertify.labels.cancel + \"'\");\n"
-//                    + "                    }\n"
-//                    + "                });\n"
-                    + "            });</script>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
+            }
+        } else if (opt.equalsIgnoreCase("3")) {
+            String codigo = request.getParameter("codigo_update");
+            control.conectar();
+            control.ejecuteQuery("select * from grupo where idgrupo=" + codigo);
+            String descripcion = "";
+            try {
+                while (control.rs.next()) {
+                    descripcion = control.rs.getString(2);
+                }
+                Sesion_grupo.setAttribute("descripcion_grupo", descripcion);
+            } catch (Exception ex) {
+
+            }
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

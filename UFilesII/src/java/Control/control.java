@@ -150,12 +150,12 @@ public class control {
         }
     }
 
-    public static void main(String[] args) throws ClassNotFoundException {
-        boolean r = conectar();
-        if (r = true) {
-            System.out.println("Conectado");
-        } else {
-            System.err.println("No Conecto");
-        }
-    }
+//    public static void main(String[] args) throws ClassNotFoundException {
+//        boolean r = conectar();
+//        if (r = true) {
+//            System.out.println("Conectado");
+//        } else {
+//            System.err.println("No Conecto");
+//        }
+//    }
 }

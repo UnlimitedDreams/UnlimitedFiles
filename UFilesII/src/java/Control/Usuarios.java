@@ -20,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -27,11 +28,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(urlPatterns = {"/Usuarios"})
 public class Usuarios extends HttpServlet {
-    
+
     ArrayList<Rol> roles = new ArrayList();
     ArrayList<Grupo> Grupos = new ArrayList();
     ArrayList<Usuario> Mis_usuarios = new ArrayList();
-    
+
     public void Traer_rol() throws ClassNotFoundException {
         roles.clear();
         control.conectar();
@@ -45,10 +46,10 @@ public class Usuarios extends HttpServlet {
                 roles.add(new Rol(cod, nom));
             }
         } catch (Exception ex) {
-            
+
         }
     }
-    
+
     public void Traer_Usuarios() throws ClassNotFoundException {
         Mis_usuarios.clear();
         control.conectar();
@@ -66,10 +67,10 @@ public class Usuarios extends HttpServlet {
                 Mis_usuarios.add(new Usuario("" + cod, nom, "" + fecha, apellido, sexo));
             }
         } catch (Exception ex) {
-            
+
         }
     }
-    
+
     public void Traer_Grupos() throws ClassNotFoundException {
         Grupos.clear();
         control.conectar();
@@ -83,10 +84,10 @@ public class Usuarios extends HttpServlet {
                 Grupos.add(new Grupo(cod, nom));
             }
         } catch (Exception ex) {
-            
+
         }
     }
-    
+
     public boolean insertar_usuario(String Nick, String pass, String rol, String cedula, String nombre,
             String apellido, String fecga, String sexo, String Gruposs) throws ClassNotFoundException {
         control.conectar();
@@ -116,13 +117,15 @@ public class Usuarios extends HttpServlet {
         }
         return ok;
     }
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
         String option = request.getParameter("opt");
         PrintWriter out = response.getWriter();
+        HttpSession usu = request.getSession(true);
         if (option.equalsIgnoreCase("1")) {
+            System.out.println("entro opt 1");
             Traer_rol();
             Traer_Grupos();
             try {
@@ -212,7 +215,7 @@ public class Usuarios extends HttpServlet {
                     temp2 = (Grupo) Grupos.get(i);
                     out.println("<option value=\"" + temp2.getCodigo() + "-" + temp2.getNombre() + "\">" + temp2.getNombre() + "</option>");
                 }
-                
+
                 out.println("  </select>\n"
                         + "                    </td>\n"
                         + "                </tr>\n"
@@ -225,7 +228,7 @@ public class Usuarios extends HttpServlet {
                         + "  <input type=\"button\" id=\"Enviar\" value=\"CREAR\">"
                         + " <div id=\"Respu\"></div>");
                 out.println("</center>");
-                
+
                 out.println("</body>");
                 out.println("</html>");
             } finally {
@@ -245,7 +248,7 @@ public class Usuarios extends HttpServlet {
             boolean ok = insertar_usuario(Nick, pass, rol, cedula, nombre, apellido, fecga, sexo, Gruposs);
             if (ok) {
                 System.out.println("ok");
-                
+
                 try {
                     out.println("<html>");
                     out.println("<head>");
@@ -268,7 +271,7 @@ public class Usuarios extends HttpServlet {
             } else {
                 System.err.println("No ok");
             }
-            
+
         } else if (option.equalsIgnoreCase("3")) {
             Traer_Usuarios();
             try {
@@ -330,12 +333,14 @@ public class Usuarios extends HttpServlet {
                 out.println("</body>");
                 out.println("</html>");
             } catch (Exception ex) {
-                
+
             }
         } else if (option.equalsIgnoreCase("4")) {
             String cod = request.getParameter("codigo_borrar");
-            System.err.println("codigo " + cod);
+            System.out.println("codigo es" + cod);
+            control.conectar();
             control.ejecuteUpdate("update persona set estado='Inactivo' where cedula=" + cod);
+            control.cerrarConexion();
         } else if (option.equalsIgnoreCase("5")) {
             String cod = request.getParameter("codigo_borrar");
             System.err.println("codigo es " + cod);
@@ -366,7 +371,6 @@ public class Usuarios extends HttpServlet {
                         + "                    }, function(responseText) {\n"
                         + "                        $(\"#tabla_usuarios\").html(responseText);\n"
                         + "                        $(\"#row\").load(\"Curd_usuarios.html\");\n"
-                        
                         + "                    });\n"
                         + "                });\n"
                         + "}"
@@ -385,7 +389,7 @@ public class Usuarios extends HttpServlet {
                 out.println("<div id=\"una\"> </div>");
                 out.println("</form>");
             } catch (Exception ex) {
-                
+
             }
         } else if (option.equalsIgnoreCase("6")) {
             System.err.println("Entroo a update ");
@@ -397,8 +401,28 @@ public class Usuarios extends HttpServlet {
             try {
                 out.println("ok");
             } catch (Exception ex) {
-                
+
             }
+        } else if (option.equalsIgnoreCase("7")) {
+            String codigo = null;
+            codigo = request.getParameter("codi");
+            System.out.println("Entro a update " + codigo);
+            control.conectar();
+            control.ejecuteQuery("select * from persona where cedula=" + codigo);
+            String nom = "", ape = "";
+            try {
+                while (control.rs.next()) {
+                    nom = control.rs.getString(2);
+                    ape = control.rs.getString(4);
+                }
+                System.err.println("traje  " + nom + " y " + ape);
+                usu.setAttribute("Usuario_nombre", nom);
+                usu.setAttribute("Usuario_Apellido", ape);
+
+            } catch (Exception ex) {
+
+            }
+
         }
     }
 
