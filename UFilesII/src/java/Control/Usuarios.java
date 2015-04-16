@@ -32,6 +32,7 @@ public class Usuarios extends HttpServlet {
     ArrayList<Rol> roles = new ArrayList();
     ArrayList<Grupo> Grupos = new ArrayList();
     ArrayList<Usuario> Mis_usuarios = new ArrayList();
+    ArrayList<String> Grups = new ArrayList();
 
     public void Traer_rol() throws ClassNotFoundException {
         roles.clear();
@@ -48,6 +49,38 @@ public class Usuarios extends HttpServlet {
         } catch (Exception ex) {
 
         }
+    }
+
+    public ArrayList<Rol> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(ArrayList<Rol> roles) {
+        this.roles = roles;
+    }
+
+    public ArrayList<Grupo> getGrupos() {
+        return Grupos;
+    }
+
+    public void setGrupos(ArrayList<Grupo> Grupos) {
+        this.Grupos = Grupos;
+    }
+
+    public ArrayList<Usuario> getMis_usuarios() {
+        return Mis_usuarios;
+    }
+
+    public void setMis_usuarios(ArrayList<Usuario> Mis_usuarios) {
+        this.Mis_usuarios = Mis_usuarios;
+    }
+
+    public ArrayList<String> getGrups() {
+        return Grups;
+    }
+
+    public void setGrups(ArrayList<String> Grups) {
+        this.Grups = Grups;
     }
 
     public void Traer_Usuarios() throws ClassNotFoundException {
@@ -85,6 +118,56 @@ public class Usuarios extends HttpServlet {
             }
         } catch (Exception ex) {
 
+        }
+    }
+
+    public void Traer_GruposConCedula(String codi) throws ClassNotFoundException {
+        Grups.clear();
+        control.conectar();
+        System.out.println("select grupo.descripcion from grupo,usuario,usuariogrupo,persona\n"
+                + "where grupo.idgrupo=usuariogrupo.idgrupo\n"
+                + "and usuariogrupo.idusuario=usuario.idusuario\n"
+                + "and usuario.cedula=persona.cedula\n"
+                + "and usuario.idusuario=" + codi);
+        control.ejecuteQuery("select grupo.descripcion from grupo,usuario,usuariogrupo,persona\n"
+                + "where grupo.idgrupo=usuariogrupo.idgrupo\n"
+                + "and usuariogrupo.idusuario=usuario.idusuario\n"
+                + "and usuario.cedula=persona.cedula\n"
+                + "and usuario.idusuario=" + codi);
+
+        int cod = 0;
+        String nom = "";
+        try {
+            while (control.rs.next()) {
+                nom = control.rs.getString(1);
+                Grups.add(nom);
+            }
+        } catch (Exception ex) {
+
+        }
+    }
+
+    public void Traer_MisDatos(String cedula) throws ClassNotFoundException {
+        Mis_usuarios.clear();
+        control.conectar();
+        control.ejecuteQuery("select persona.*,usuario.nickname from persona,usuario where\n"
+                + "persona.cedula=usuario.cedula and usuario.idusuario=" + cedula);
+        int cod = 0;
+        String nom = "", apellido = "", sexo = "", nick = "";
+        Date fecha = null;
+        try {
+            while (control.rs.next()) {
+                cod = control.rs.getInt(1);
+                nom = control.rs.getString(2);
+                fecha = control.rs.getDate(3);
+                apellido = control.rs.getString(4);
+                sexo = control.rs.getString(5);
+                nick = control.rs.getString(7);
+                Mis_usuarios.add(new Usuario(nick, "" + cod, nom, apellido, "" + fecha, sexo));
+            }
+            System.err.println("tam " + Mis_usuarios.size() + " con cedula " + cod);
+        } catch (Exception ex) {
+            System.out.println("ex");
         }
     }
 
@@ -273,68 +356,62 @@ public class Usuarios extends HttpServlet {
             }
 
         } else if (option.equalsIgnoreCase("3")) {
-            Traer_Usuarios();
-            try {
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println(""
-                        + "<script src=\"Jquery/jquery-1.11.2.js\"></script>\n");
-                out.println("<script>"
-                        + " function borrar(codigo) {\n"
-                        + "alert(\"Seguro que desea borrar \");"
-                        + "                $(document).ready(function() {\n"
-                        + "                    var option = 4;\n"
-                        + "                    $.post('Usuarios', {\n"
-                        + "                        codigo_borrar: codigo,\n"
-                        + "                        opt: option,\n"
-                        + "                    }, function(responseText) {\n"
-                        + "                        $(\"#Prueb_usu\").html(responseText);\n"
-                        + "                        $(\"#tabla_usuarios\").load(\"Crud_usuarios.html\");\n"
-                        + "                    });\n"
-                        + "                });\n"
-                        + "            }"
-                        + " function update(codigo) {\n"
-                        + "                $(document).ready(function() {\n"
-                        + "                    var option = 5;\n"
-                        + "                    $.post('Usuarios', {\n"
-                        + "                        codigo_borrar: codigo,\n"
-                        + "                        opt: option,\n"
-                        + "                    }, function(responseText) {\n"
-                        + "                         $(\"#tabla_usuarios\").hide();"
-                        + "                        $(\"#Updat_usu\").html(responseText);\n"
-                        + "                    });\n"
-                        + "                });\n"
-                        + "            }"
-                        + "</script>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<center>");
-                out.println("<br><br><br>");
-                out.println("<table>");
-                out.println("<tr><td>cedula</td><td>nombre</td><td>apellido</td><td>fecha</td><td>sexo</td><td>Borrar</td>"
-                        + "<td>Actualizar</td><tr>");
-                Usuario temp = null;
-                for (int i = 0; i < Mis_usuarios.size(); i++) {
-                    temp = (Usuario) Mis_usuarios.get(i);
-                    out.println("<tr>");
-                    out.println("<td>" + temp.getCedula() + "</td>");
-                    out.println("<td>" + temp.getNombre() + "</td>");
-                    out.println("<td>" + temp.getApellido() + "</td>");
-                    out.println("<td>" + temp.getFecha_naci() + "</td>");
-                    out.println("<td>" + temp.getSexo() + "</td>");
-                    out.println("<td><input type=\"button\" class=\"btn btn-info\" value=\"Borrar\" id=\"borr\" onclick=borrar(" + temp.getCedula() + ")></td>");
-                    out.println("<td><input type=\"button\"  class=\"btn btn-info\" value=\"Actualizar\"  onclick=update(" + temp.getCedula() + ")></td>");
-                    out.println("</tr>");
-                }
-                out.println("</table>");
-                out.println("</center>");
-                out.println("<div id=\"Prueb_usu\"> </div>");
-                out.println("</body>");
-                out.println("</html>");
-            } catch (Exception ex) {
-
+            System.err.println("entro a la 3");
+            HttpSession s = request.getSession(true);
+            String codigo = (String) s.getAttribute("idUsuario");
+            System.err.println("id de usuario es " + codigo);
+            Traer_MisDatos(codigo);
+            Traer_GruposConCedula(codigo);
+            out.println("<body>");
+            out.println("<center>");
+            out.println("<br><br><br>");
+            Usuario temp = null;
+            for (int i = 0; i < Mis_usuarios.size(); i++) {
+                temp = (Usuario) Mis_usuarios.get(i);
+                out.println(" <table>\n"
+                        + "                <tr>\n"
+                        + "                    <td><label>NickName</label></td>\n"
+                        + "                    <td><input type=\"text\" id=\"nom\" value=" + temp.getNickName() + " disabled=\"\"></td>\n"
+                        + "                </tr>\n"
+                        + "                <tr>\n"
+                        + "                    <td><label>Cedula</label></td>\n"
+                        + "                    <td><input type=\"text\" id=\"Ape\" value=" + temp.getCedula() + "  disabled=\"\"></td>\n"
+                        + "                </tr>\n"
+                        + "                <tr>\n"
+                        + "                    <td><label>Nombre</label></td>\n"
+                        + "                    <td><input type=\"text\" id=\"Ape\" value=" + temp.getNombre() + "></td>\n"
+                        + "                </tr>\n"
+                        + "                <tr>\n"
+                        + "                    <td><label>Apellido</label></td>\n"
+                        + "                    <td><input type=\"text\" id=\"Ape\" value=" + temp.getApellido() + "></td>\n"
+                        + "                </tr>\n"
+                        + "                <tr>\n"
+                        + "                    <td><label>Fecha de nacimiento</label></td>\n"
+                        + "                    <td><input type=\"text\" id=\"Ape\" value=" + temp.getFecha_naci() + "  disabled=\"\"></td>\n"
+                        + "                </tr>\n"
+                        + "                <tr>\n"
+                        + "                    <td><label>Sexo</label></td>\n"
+                        + "                    <td><input type=\"text\" id=\"Ape\" value=" + temp.getSexo() + "  disabled=\"\"></td>\n"
+                        + "                </tr>\n"
+                        + "            </table>");
+                out.println("<br/><br/>");
             }
+            out.println("<h3>Mis Grupos</h3>"
+                    + "<table border=1>");
+            String elGrupo = "";
+            System.err.println("tamaño de grupos " + Grups.size());
+            for (int k = 0; k < Grups.size(); k++) {
+                elGrupo = (String) Grups.get(k);
+                out.println("<tr><td>" + elGrupo + "</td></tr>");
+            }
+            out.println("</table>");
+            out.println("<input type=\"button\" id=\"Enviar\" value=\"Guardar\">"
+                    + " <div id=\"Respu\"></div>"
+            );
+            out.println("</center>");
+
+            out.println("</body>");
+
         } else if (option.equalsIgnoreCase("4")) {
             String cod = request.getParameter("codigo_borrar");
             System.out.println("codigo es" + cod);

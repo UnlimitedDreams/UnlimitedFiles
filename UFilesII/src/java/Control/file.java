@@ -91,7 +91,7 @@ public class file extends HttpServlet {
                         item.write(uploadedFile);
 
                         update(cod, "Documentos/" + grup + "/" + sCadenaSinBlancos);
-                        response.sendRedirect("portfolio.html");
+                        response.sendRedirect("main.html");
 
 //                        fi.setAttribute("Ruta", uploadedFile);
 //                        BeanArchivo archivo = new BeanArchivo();

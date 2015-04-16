@@ -58,18 +58,19 @@
                 <table>
                     <%
                         Rol ro = new Rol();
-                        Mis_roles=ro.cargar_rol(Mis_roles);
-                        Rol temp2 = null;
+                        Mis_roles = ro.cargar_rol(Mis_roles);
                         out.println("<tr>");
                         out.println("<td>Codigo</td>");
                         out.println("<td>Descripcion</td>");
                         out.println("</tr>");
-                        for (int i = 0; i < Mis_roles.size(); i++) {
-                            temp2 = (Rol) Mis_roles.get(i);
+                        Rol temp2 = null;
+                        for (int i = 0; i <Mis_roles.size(); i++) {
+                            temp2 = Mis_roles.get(i);
                             out.println("<tr>");
                             out.println("<td>" + temp2.getCodigo() + "</td>");
-                            out.println("<td>" + temp2.getDescripcion()+ "</td>");
-                            out.println("<td><input type=\"button\" class=\"btn btn-info\" value=\"Borrar\"  onclick=borrar_rol(" + temp2.getCodigo() + ")></td> ");
+                            out.println("<td>" + temp2.getDescripcion() + "</td>");
+                            out.println("<td><input type=\"button\" class=\"btn btn-info\" value=\"Borrar\"  "
+                                    + "onclick=borrar_rol(" + temp2.getCodigo() + ")></td> ");
                             out.println("<td> <a href=\"#modal2\"  class=\"btn btn-success\"   data-toggle=\"modal\""
                                     + " onclick=upd(" + temp2.getCodigo() + ")>Update</a> </td>");
                             out.println("</tr>");

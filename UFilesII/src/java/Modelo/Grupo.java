@@ -41,6 +41,7 @@ public class Grupo {
     public ArrayList cargar_grupos(ArrayList x) throws ClassNotFoundException{
         x.clear();
         Control.control.conectar();
+        System.err.println("Entroooo");
         control.ejecuteQuery("select * from Grupo where estado='Activo'");
         int cod = 0;
         String nom = "";

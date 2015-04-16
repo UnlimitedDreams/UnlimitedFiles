@@ -107,7 +107,8 @@ ArrayList<Usuario> Mis_usuarios = new ArrayList();
       out.write("                <br/><br/><br/>\n");
       out.write("                <table>\n");
       out.write("                    ");
-
+;
+                        out.println("<tr>");
                         Mis_usuarios = new Usuario().Traer_Usuarios(Mis_usuarios);
                         Usuario temp = null;
                         out.println("<tr>");

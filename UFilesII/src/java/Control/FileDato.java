@@ -114,8 +114,7 @@ public class FileDato extends HttpServlet {
                         + "                </tr>\n");
                 out.println("                            </table>\n"
                         + "                            <br>\n"
-                        + "<a id=\"Carg\"  href=\"#modal1\" class=\"btn btn-success\"  data-toggle=\"modal\" >Agregar</a> "
-                        ////                        + "                            <input type=\"button\" id=\"Carg\"  value=\"Cargar\" >\n"
+                        + "                            <input type=\"button\" id=\"Carg\"  value=\"Cargar\" >\n"
                         + "                        </form>");
 
                 out.println("</body>");
@@ -125,8 +124,8 @@ public class FileDato extends HttpServlet {
             }
         } else if (opt.equalsIgnoreCase("2")) {
             System.out.println("entro a option 2");
-//            int codigo = Secuencias.Sequen("select max(cod_rutas) from rutas");
-//            int codigoGrupodoc = Secuencias.Sequen("select max(grupodoc) from grupodocu");
+            int codigo = Secuencias.Sequen("select max(cod_rutas) from rutas");
+            int codigoGrupodoc = Secuencias.Sequen("select max(grupodoc) from grupodocu");
             String nom = request.getParameter("Nom");
             String descrip = request.getParameter("Descrip");
             String grp = request.getParameter("Grupo");
@@ -138,18 +137,18 @@ public class FileDato extends HttpServlet {
             int dia = fecha.get(Calendar.DAY_OF_MONTH);
             String fechas = "" + dia + "-" + mes + "-" + año;
             System.out.println("fecha " + fechas);
-//            boolean r = control.ejecuteUpdate("insert into rutas values(" + codigo + ",'-','" + nom + "','" + descrip + "','" + fechas + "')");
-//            if (r) {
-//                System.out.println("Entro query");
-//                boolean f = control.ejecuteUpdate("insert into  grupodocu values(" + codigoGrupodoc + "," + codigo + "," + gruppo[0] + ")");
-//                System.out.println("f " + f);
-//            }
+            boolean r = control.ejecuteUpdate("insert into rutas values(" + codigo + ",'-','" + nom + "','" + descrip + "','" + fechas + "')");
+            if (r) {
+                System.out.println("Entro query");
+                boolean f = control.ejecuteUpdate("insert into  grupodocu values(" + codigoGrupodoc + "," + codigo + "," + gruppo[0] + ")");
+                System.out.println("f " + f);
+            }
             HttpSession gr = request.getSession(true);
-////            String codigito = "" + codigo;
-//            System.out.println("paso 1" + codigito);
-//            gr.setAttribute("Grupo", gruppo[1]);
-//            System.out.println("paso 2 " + gruppo[1]);
-//            gr.setAttribute("Cod", codigito);
+            String codigito = "" + codigo;
+            System.out.println("paso 1" + codigito);
+            gr.setAttribute("Grupo", gruppo[1]);
+            System.out.println("paso 2 " + gruppo[1]);
+            gr.setAttribute("Cod", codigito);
             try {
                 out.println("<form action=\"file\" enctype=\"multipart/form-data\" method=\"post\">\n"
                         + "                            <table>\n"

@@ -15,6 +15,7 @@ import java.util.ArrayList;
  */
 public class Usuario {
 
+    private String nickName;
     private String cedula;
     private String nombre;
     private String Apellido;
@@ -22,6 +23,24 @@ public class Usuario {
     private String Sexo;
 
     public Usuario(String cedula, String nombre, String Apellido, String Fecha_naci, String Sexo) {
+        this.cedula = cedula;
+        this.nombre = nombre;
+        this.Apellido = Apellido;
+        this.Fecha_naci = Fecha_naci;
+        this.Sexo = Sexo;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+    
+
+    public Usuario(String nickName, String cedula, String nombre, String Apellido, String Fecha_naci, String Sexo) {
+        this.nickName = nickName;
         this.cedula = cedula;
         this.nombre = nombre;
         this.Apellido = Apellido;
@@ -94,10 +113,29 @@ public class Usuario {
 
         return Mis_usuarios;
     }
-
-    public void borrar(String cod) throws ClassNotFoundException {
-        System.err.println("Entro a borrar " +cod);
+    public ArrayList Traer_UsuariosSinGrupo(ArrayList Mis_usuarios) throws ClassNotFoundException {
+        Mis_usuarios.clear();
         control.conectar();
-        control.ejecuteUpdate("update persona set estado='Inactivo' where cedula=" + cod);
+        control.ejecuteQuery("select * from persona where estado='Activo'");
+        int cod = 0;
+        String nom = "", apellido = "", sexo = "";
+        Date fecha = null;
+        try {
+            while (control.rs.next()) {
+                cod = control.rs.getInt(1);
+                nom = control.rs.getString(2);
+                fecha = control.rs.getDate(3);
+                apellido = control.rs.getString(4);
+                sexo = control.rs.getString(5);
+                Mis_usuarios.add(new Usuario("" + cod, nom, "" + fecha, apellido, sexo));
+            }
+        } catch (Exception ex) {
+            System.out.println("ex");
+        }
+
+        return Mis_usuarios;
     }
+        
+
+
 }
