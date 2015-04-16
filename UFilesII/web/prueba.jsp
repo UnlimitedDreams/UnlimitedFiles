@@ -19,11 +19,11 @@
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 var option = 3;
                 $.post('Usuarios', {
                     opt: option,
-                }, function(responseText) {
+                }, function (responseText) {
                     $('#tabla_usuarios').html(responseText);
                 });
             });
@@ -38,7 +38,7 @@
                     <img src="img/text3338.png" style="width: 30px; height: 30px;"/> 
                 </a> 
                 <ul class="nav navbar-nav"> 
-                    <li> <a href="https://www.facebook.com/sebazz.giraldo"><h5 style="color:#006400">Home</h5></a></li>
+                    <li> <a href="main.html"><h5 style="color:#006400">Home</h5></a></li>
                     <li><a href="http://getbootstrap.com/examples/starter-template/#"><h5 style="color:#006400">Productos</h5></a></li>
                     <li><a href="http://getbootstrap.com/examples/starter-template/#"><h5 style="color:#006400">Contactos</h5></a></li>
                 </ul>                 
@@ -64,26 +64,27 @@
 
                     <script src="Jquery/jquery-1.11.2.js"></script>
 
-                    <script> function borrar(codigo) {
+                    <script>
+            function borrar(codigo) {
                 alert("Seguro que desea borrar ");
-                $(document).ready(function() {
+                $(document).ready(function () {
                     var option = 4;
                     $.post('Usuarios', {
                         codigo_borrar: codigo,
                         opt: option,
-                    }, function(responseText) {
+                    }, function (responseText) {
                         $("#Prueb_usu").html(responseText);
                         $("#tabla_usuarios").load("Crud_usuarios.html");
                     });
                 });
             }
             function update(codigo) {
-                $(document).ready(function() {
+                $(document).ready(function () {
                     var option = 5;
                     $.post('Usuarios', {
                         codigo_borrar: codigo,
                         opt: option,
-                    }, function(responseText) {
+                    }, function (responseText) {
                         $("#tabla_usuarios").hide();
                         $("#Updat_usu").html(responseText);
                     });
