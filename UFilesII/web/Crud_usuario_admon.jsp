@@ -136,6 +136,12 @@
     </div>
     <script src="Jquery/jquery-1.11.2.js"></script>
     <script>
+        function guardar(){
+        
+        }
+        
+    </script>
+    <script>
                 function borrar(codigo) {
                     alert("Seguro que desea borrar ");
                     $(document).ready(function() {

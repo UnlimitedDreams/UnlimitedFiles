@@ -33,7 +33,12 @@ public class prueba23 extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        response.sendRedirect("Subir_Documento.html");
+        String tip[]=request.getParameterValues("tip");
+        for(int i=0;i<tip.length;i++){
+            
+        }
+            
+        System.err.println("--- " + tip);
         PrintWriter out = response.getWriter();
         try {
             /* TODO output your page here. You may use following sample code. */

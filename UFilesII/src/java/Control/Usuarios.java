@@ -482,19 +482,41 @@ public class Usuarios extends HttpServlet {
             }
         } else if (option.equalsIgnoreCase("7")) {
             String codigo = null;
-            codigo = request.getParameter("codi");
+            codigo = request.getParameter("des");
             System.out.println("Entro a update " + codigo);
             control.conectar();
-            control.ejecuteQuery("select * from persona where cedula=" + codigo);
+            String codigo_new[] = codigo.split("-");
+            ArrayList<Usuario> Usua = new ArrayList();
+            control.ejecuteQuery("select distinct persona.cedula,nombre,apellido from grupo,usuariogrupo,usuario,persona\n"
+                    + "where usuariogrupo.idusuario=usuario.idusuario\n"
+                    + "and persona.cedula=usuario.cedula\n"
+                    + "and usuariogrupo.idgrupo<>" + codigo_new[0]
+                    + "and grupo.estado='Activo'");
             String nom = "", ape = "";
+            int ced = 0;
             try {
                 while (control.rs.next()) {
+                    ced = control.rs.getInt(1);
                     nom = control.rs.getString(2);
-                    ape = control.rs.getString(4);
+                    ape = control.rs.getString(3);
+                    Usua.add(new Usuario("" + ced, nom, ape));
                 }
-                System.err.println("traje  " + nom + " y " + ape);
-                usu.setAttribute("Usuario_nombre", nom);
-                usu.setAttribute("Usuario_Apellido", ape);
+                
+                out.println("<table>");
+                out.println("<tr><td>Seleccion</td><td>cedula</td><td>nombre</td><td>apellido</td></tr>");
+                Usuario temp = null;
+                for (int i = 0; i < Usua.size(); i++) {
+                    temp = (Usuario) Usua.get(i);
+                    out.println("<tr>");
+                    out.println("<td><input type='checkbox' ></td>");
+                    out.println("<td>" + temp.getCedula() + "</td>");
+                    out.println("<td>" + temp.getNombre() + "</td>");
+                    out.println("<td>" + temp.getApellido() + "</td>");
+                    out.println("</tr>");
+                }
+                out.println("</table>");
+                out.println("<input type=\"button\" value=\"Guardar\" id=\"Guardar\">");
+                
 
             } catch (Exception ex) {
 

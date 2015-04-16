@@ -37,6 +37,12 @@ public class Usuario {
     public void setNickName(String nickName) {
         this.nickName = nickName;
     }
+
+    public Usuario(String cedula, String nombre, String Apellido) {
+        this.cedula = cedula;
+        this.nombre = nombre;
+        this.Apellido = Apellido;
+    }
     
 
     public Usuario(String nickName, String cedula, String nombre, String Apellido, String Fecha_naci, String Sexo) {
