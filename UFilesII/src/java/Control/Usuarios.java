@@ -5,12 +5,13 @@ package Control;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import Modelo.Grupo;
 import Modelo.Rol;
+import Modelo.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,10 +27,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(urlPatterns = {"/Usuarios"})
 public class Usuarios extends HttpServlet {
-
+    
     ArrayList<Rol> roles = new ArrayList();
     ArrayList<Grupo> Grupos = new ArrayList();
-
+    ArrayList<Usuario> Mis_usuarios = new ArrayList();
+    
     public void Traer_rol() throws ClassNotFoundException {
         roles.clear();
         control.conectar();
@@ -43,10 +45,31 @@ public class Usuarios extends HttpServlet {
                 roles.add(new Rol(cod, nom));
             }
         } catch (Exception ex) {
-
+            
         }
     }
-
+    
+    public void Traer_Usuarios() throws ClassNotFoundException {
+        Mis_usuarios.clear();
+        control.conectar();
+        control.ejecuteQuery("select * from persona where estado='Activo'");
+        int cod = 0;
+        String nom = "", apellido = "", sexo = "";
+        Date fecha = null;
+        try {
+            while (control.rs.next()) {
+                cod = control.rs.getInt(1);
+                nom = control.rs.getString(2);
+                fecha = control.rs.getDate(3);
+                apellido = control.rs.getString(4);
+                sexo = control.rs.getString(5);
+                Mis_usuarios.add(new Usuario("" + cod, nom, "" + fecha, apellido, sexo));
+            }
+        } catch (Exception ex) {
+            
+        }
+    }
+    
     public void Traer_Grupos() throws ClassNotFoundException {
         Grupos.clear();
         control.conectar();
@@ -60,10 +83,10 @@ public class Usuarios extends HttpServlet {
                 Grupos.add(new Grupo(cod, nom));
             }
         } catch (Exception ex) {
-
+            
         }
     }
-
+    
     public boolean insertar_usuario(String Nick, String pass, String rol, String cedula, String nombre,
             String apellido, String fecga, String sexo, String Gruposs) throws ClassNotFoundException {
         control.conectar();
@@ -72,7 +95,7 @@ public class Usuarios extends HttpServlet {
         int codigo_usuGrupo = Secuencias.Sequen("select max(idusuariogrupo) from usuariogrupo");
         boolean ok = false;
         boolean r = control.ejecuteUpdate("insert into persona values('" + cedula + "','" + nombre + "','" + fecga + "','"
-                + apellido + "','" + sexo + "')");
+                + apellido + "','" + sexo + "','Activo')");
         if (r) {
             System.out.println("inserto persona");
             boolean per = control.ejecuteUpdate("insert into usuario values(" + codigo + ",'" + Nick + "','"
@@ -93,15 +116,15 @@ public class Usuarios extends HttpServlet {
         }
         return ok;
     }
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
         String option = request.getParameter("opt");
+        PrintWriter out = response.getWriter();
         if (option.equalsIgnoreCase("1")) {
             Traer_rol();
             Traer_Grupos();
-            PrintWriter out = response.getWriter();
             try {
                 /* TODO output your page here. You may use following sample code. */
                 out.println("<!DOCTYPE html>");
@@ -189,7 +212,7 @@ public class Usuarios extends HttpServlet {
                     temp2 = (Grupo) Grupos.get(i);
                     out.println("<option value=\"" + temp2.getCodigo() + "-" + temp2.getNombre() + "\">" + temp2.getNombre() + "</option>");
                 }
-
+                
                 out.println("  </select>\n"
                         + "                    </td>\n"
                         + "                </tr>\n"
@@ -202,7 +225,7 @@ public class Usuarios extends HttpServlet {
                         + "  <input type=\"button\" id=\"Enviar\" value=\"CREAR\">"
                         + " <div id=\"Respu\"></div>");
                 out.println("</center>");
-
+                
                 out.println("</body>");
                 out.println("</html>");
             } finally {
@@ -222,8 +245,7 @@ public class Usuarios extends HttpServlet {
             boolean ok = insertar_usuario(Nick, pass, rol, cedula, nombre, apellido, fecga, sexo, Gruposs);
             if (ok) {
                 System.out.println("ok");
-                PrintWriter out = response.getWriter();
-
+                
                 try {
                     out.println("<html>");
                     out.println("<head>");
@@ -246,7 +268,137 @@ public class Usuarios extends HttpServlet {
             } else {
                 System.err.println("No ok");
             }
-
+            
+        } else if (option.equalsIgnoreCase("3")) {
+            Traer_Usuarios();
+            try {
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println(""
+                        + "<script src=\"Jquery/jquery-1.11.2.js\"></script>\n");
+                out.println("<script>"
+                        + " function borrar(codigo) {\n"
+                        + "alert(\"Seguro que desea borrar \");"
+                        + "                $(document).ready(function() {\n"
+                        + "                    var option = 4;\n"
+                        + "                    $.post('Usuarios', {\n"
+                        + "                        codigo_borrar: codigo,\n"
+                        + "                        opt: option,\n"
+                        + "                    }, function(responseText) {\n"
+                        + "                        $(\"#Prueb_usu\").html(responseText);\n"
+                        + "                        $(\"#tabla_usuarios\").load(\"Crud_usuarios.html\");\n"
+                        + "                    });\n"
+                        + "                });\n"
+                        + "            }"
+                        + " function update(codigo) {\n"
+                        + "                $(document).ready(function() {\n"
+                        + "                    var option = 5;\n"
+                        + "                    $.post('Usuarios', {\n"
+                        + "                        codigo_borrar: codigo,\n"
+                        + "                        opt: option,\n"
+                        + "                    }, function(responseText) {\n"
+                        + "                         $(\"#tabla_usuarios\").hide();"
+                        + "                        $(\"#Updat_usu\").html(responseText);\n"
+                        + "                    });\n"
+                        + "                });\n"
+                        + "            }"
+                        + "</script>");
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<center>");
+                out.println("<br><br><br>");
+                out.println("<table>");
+                out.println("<tr><td>cedula</td><td>nombre</td><td>apellido</td><td>fecha</td><td>sexo</td><td>Borrar</td>"
+                        + "<td>Actualizar</td><tr>");
+                Usuario temp = null;
+                for (int i = 0; i < Mis_usuarios.size(); i++) {
+                    temp = (Usuario) Mis_usuarios.get(i);
+                    out.println("<tr>");
+                    out.println("<td>" + temp.getCedula() + "</td>");
+                    out.println("<td>" + temp.getNombre() + "</td>");
+                    out.println("<td>" + temp.getApellido() + "</td>");
+                    out.println("<td>" + temp.getFecha_naci() + "</td>");
+                    out.println("<td>" + temp.getSexo() + "</td>");
+                    out.println("<td><input type=\"button\" class=\"btn btn-info\" value=\"Borrar\" id=\"borr\" onclick=borrar(" + temp.getCedula() + ")></td>");
+                    out.println("<td><input type=\"button\"  class=\"btn btn-info\" value=\"Actualizar\"  onclick=update(" + temp.getCedula() + ")></td>");
+                    out.println("</tr>");
+                }
+                out.println("</table>");
+                out.println("</center>");
+                out.println("<div id=\"Prueb_usu\"> </div>");
+                out.println("</body>");
+                out.println("</html>");
+            } catch (Exception ex) {
+                
+            }
+        } else if (option.equalsIgnoreCase("4")) {
+            String cod = request.getParameter("codigo_borrar");
+            System.err.println("codigo " + cod);
+            control.ejecuteUpdate("update persona set estado='Inactivo' where cedula=" + cod);
+        } else if (option.equalsIgnoreCase("5")) {
+            String cod = request.getParameter("codigo_borrar");
+            System.err.println("codigo es " + cod);
+            control.ejecuteQuery("select * from persona where cedula=" + cod);
+            String nombre = "", apellido = "", Sexo = "";
+            Date fec = null;
+            try {
+                while (control.rs.next()) {
+                    nombre = control.rs.getString(2);
+                    apellido = control.rs.getString(4);
+                }
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println(""
+                        + "<script src=\"Jquery/jquery-1.11.2.js\"></script>\n");
+                out.println("<script>"
+                        + "function upda(codigo){"
+                        + "                $(document).ready(function() {\n"
+                        + "                    var option = 6;\n"
+                        + "                    var nombre = $(\"#nom\").val();\n"
+                        + "                    var apellido = $(\"#ape\").val();\n"
+                        + "                    $.post('Usuarios', {\n"
+                        + "                        codigo_borrar: codigo,\n"
+                        + "                          nom:nombre,"
+                        + "                         ape:apellido,"
+                        + "                        opt: option,\n"
+                        + "                    }, function(responseText) {\n"
+                        + "                        $(\"#tabla_usuarios\").html(responseText);\n"
+                        + "                        $(\"#row\").load(\"Curd_usuarios.html\");\n"
+                        
+                        + "                    });\n"
+                        + "                });\n"
+                        + "}"
+                        + "</script>");
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<form>");
+                out.println("<table>");
+                out.println("<tr><td>Nombre</td><td>Apellido</td></tr>");
+                out.println("<td><input type=\"text\" value=" + nombre + " id=\"nom\"> </td>");
+                out.println("<td><input type=\"text\" value=" + apellido + " id=\"ape\"> </td>");
+                out.println("</table>");
+                out.println("<br><br>");
+                out.println("<input type=\"button\" onclick=upda(" + cod + ") value=\"Update\"> ");
+                out.println("<a href='Crud_usuarios.html'>Atras</a> ");
+                out.println("<div id=\"una\"> </div>");
+                out.println("</form>");
+            } catch (Exception ex) {
+                
+            }
+        } else if (option.equalsIgnoreCase("6")) {
+            System.err.println("Entroo a update ");
+            String nom = request.getParameter("nom");
+            String ape = request.getParameter("ape");
+            String cod = request.getParameter("codigo_borrar");
+            control.ejecuteUpdate("update persona set nombre='" + nom + "',apellido='" + ape + "' where cedula=" + cod);
+            response.sendRedirect("Crud_usuarios.html");
+            try {
+                out.println("ok");
+            } catch (Exception ex) {
+                
+            }
         }
     }
 

@@ -155,6 +155,7 @@ public class Crear_Rol extends HttpServlet {
                         + "                        Nombr: nombre,\n"
                         + "                        opt: option,\n"
                         + "                    }, function(responseText) {\n"
+                        + "                        $(\"#tabla\").hide();\n"
                         + "                        $(\"#Updat\").html(responseText);\n"
                         + "                    });\n"
                         + "                });\n"
@@ -299,9 +300,10 @@ public class Crear_Rol extends HttpServlet {
                         + "<script src=\"http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js\"></script>"
                         + "<script src=\"Jquery/jquery-1.11.2.js\"></script>\n");
                 out.println("<script> $(document).ready(function() {\n"
+                        + "                $(\"#up\").click(function() {\n"
                         + "                    var option = 5;\n"
-                        + " var codigo=(\"#cod\").val();"
-                        + " var nombre=(\"#nom\").val();"
+                        + " var codigo=$(\"#cod\").val();"
+                        + " var nombre=$(\"#nom\").val();"
                         + "                    $.post('Crear_Rol', {\n"
                         + "                        codigo_borrar: codigo,\n"
                         + "                        Nombr: nombre,\n"
@@ -309,6 +311,7 @@ public class Crear_Rol extends HttpServlet {
                         + "                    }, function(responseText) {\n"
                         + "                        $(\"#tabla\").html(responseText);\n"
                         + "                    });\n"
+                        + "                });"
                         + "                });"
                         + "</script>");
                 out.println("</head>");
@@ -318,7 +321,7 @@ public class Crear_Rol extends HttpServlet {
                 out.println("<tr><td><input type=\"text\" id=\"cod\" value=" + cod + " disabled=\"\"> </td></h3>");
                 out.println("<td><input type=\"text\" id=\"nom\" value=" + Nombre + "></td></h3></tr>");
                 out.println("<table>");
-                out.println("<input type=\"button\" placeholder=\"Update\" class=\"form-control\" id=\"opt\"  style=\"width: 200px;\" /> \n"
+                out.println("<input type=\"button\" value=\"Update\"  id=\"up\" > \n"
                         + "");
 
                 out.println("</body>");
@@ -327,9 +330,13 @@ public class Crear_Rol extends HttpServlet {
             }
 //            response.sendRedirect("Update.html");
         } else if (option.equalsIgnoreCase("5")) {
-            String codigo = (String) Seccion_rol.getAttribute("codigo");
-            String nombr = (String) Seccion_rol.getAttribute("nombre");
-            System.err.println("recivi " + codigo + " y "+ nombr);
+            String codigo = request.getParameter("codigo_borrar");
+            String nombr = request.getParameter("Nombr");
+            System.err.println("recivi " + codigo + " y " + nombr);
+            control.conectar();
+            control.ejecuteUpdate("update  rol set descripcion='" + nombr + "' where cod_rol=" + codigo);
+            response.sendRedirect("Crud_roles.html");
+         
 
         }
         // Set response content type
