@@ -59,6 +59,7 @@ public class login_ser extends HttpServlet {
         HttpSession s = request.getSession(true);
         if (rol == 1) {
             s.setAttribute("idUsuario", codigo);
+            s.setAttribute("idRol",rol);
             response.sendRedirect("main.html");
         }
         if (esta == false) {

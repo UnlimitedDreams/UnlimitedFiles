@@ -11,8 +11,10 @@
 
     <h:head>
         <h:meta charset="utf-8"></h:meta>
-        <h:title>Unlimited Files</h:title>
+        <title>Unlimited Files</title>
         <h:meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="../img/unlimtd.ico"/>
+
         <!-- css -->
         <link href="css/bootstrap.min.css" rel="stylesheet" />
         <link  href = "../bootstrap-3.3.4/css/bootstrap.css"  rel = "stylesheet" ></link>
@@ -47,27 +49,35 @@
         <br></br>
 
         <div class="container">
-            <div class="row">
-                <h1>GESTION DE ADMINISTRADOR</h1>
-                <!--<div class="col-xs-6 col-md-4">
-                    <a href="gestionUsuariosAdmon.html" class="thumbnail" >
-                        <img src="img/slides/user197.png" style="height: 100px; width: 100px" />
-                    </a>
-                    <div class="caption">
-                        <center> <h3>Gestion de usuarios</h3></center>
-                    </div>
-                </div>-->
+            <%
+                int rol = Integer.parseInt(session.getAttribute("idRol").toString());
+                if (rol == 1) {
+                    out.println("<div class=\"row\"><h1>GESTION DE ADMINISTRADOR</h1><div class=\"col - xs - 6 col - md - 4\">"
+                            + "<a href = \"../Crud_roles.html\" class=\"thumbnail\">"
+                            + "<img src=\"../img/slides/network11.png\" style=\"height: 100px; width: 100px\" />"
+                            + "</a><div class=\"caption\"><center> <h3>Gestion de  roles</h3></center>"
+                            + "</div></div><div class=\"col-xs-6 col-md-4\">"
+                            + "<a href=\"../crud_Grupos.jsp\" class=\"thumbnail\">"
+                            + "<img src=\"../img/slides/group9.png\" style=\"height: 100px ; width: 100px\"/>"
+                            + "</a><div class=\"caption\"><center><h3>Gestion de  grupos de trabajo</h3></center>"
+                            + "</div></div><div class=\"col-xs-6 col-md-4\">"
+                            + "<a href=\"../Crud_usuario_admon.jsp\" class=\"thumbnail\">"
+                            + "<img src=\"../img/slides/group9.png\" style=\"height: 100px ; width: 100px\"/>"
+                            + "</a><div class=\"caption\"><center><h3>Gestion de  Usuarios</h3></center>"
+                            + "</div></div></div>");
+                } 
 
-                <div class="col-xs-6 col-md-4">
+
+            %>
+
+            <div class="row"><h1>GESTION DE ADMINISTRADOR</h1><div class="col-xs-6 col-md-4">
                     <a href="../Crud_roles.html" class="thumbnail">
                         <img src="../img/slides/network11.png" style="height: 100px; width: 100px" />
                     </a>
                     <div class="caption">
                         <center>  <h3>Gestion de  roles</h3></center>
-
                     </div>
                 </div>
-
                 <div class="col-xs-6 col-md-4">
                     <a href="../crud_Grupos.jsp" class="thumbnail">
                         <img src="../img/slides/group9.png" style="height: 100px ; width: 100px" />
@@ -97,7 +107,7 @@
                         <center> <h3>Subir archivos</h3></center>
                     </div>
                 </div>
-              
+
                 <div class="col-xs-6 col-md-4">
                     <a href="../MisGrupos.html" class="thumbnail">
                         <img src="../img/slides/manager3 .png" style="height: 100px ; width: 100px" />
