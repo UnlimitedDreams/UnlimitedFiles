@@ -61,6 +61,9 @@ public class login_ser extends HttpServlet {
             s.setAttribute("idUsuario", codigo);
             response.sendRedirect("main.html");
         }
+        if (esta == false) {
+            response.sendRedirect("inicio.html");
+        }
 
     }
 

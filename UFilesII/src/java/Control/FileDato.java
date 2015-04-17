@@ -125,7 +125,7 @@ public class FileDato extends HttpServlet {
         } else if (opt.equalsIgnoreCase("2")) {
             System.out.println("entro a option 2");
             int codigo = Secuencias.Sequen("select max(cod_rutas) from rutas");
-            int codigoGrupodoc = Secuencias.Sequen("select max(grupodoc) from grupodocu");
+            int codigoGrupodoc = Secuencias.Sequen("select max(grupodoc) from grupodoc");
             String nom = request.getParameter("Nom");
             String descrip = request.getParameter("Descrip");
             String grp = request.getParameter("Grupo");
@@ -140,7 +140,7 @@ public class FileDato extends HttpServlet {
             boolean r = control.ejecuteUpdate("insert into rutas values(" + codigo + ",'-','" + nom + "','" + descrip + "','" + fechas + "')");
             if (r) {
                 System.out.println("Entro query");
-                boolean f = control.ejecuteUpdate("insert into  grupodocu values(" + codigoGrupodoc + "," + codigo + "," + gruppo[0] + ")");
+                boolean f = control.ejecuteUpdate("insert into  grupodoc values(" + codigoGrupodoc + "," + codigo + "," + gruppo[0] + ")");
                 System.out.println("f " + f);
             }
             HttpSession gr = request.getSession(true);

@@ -141,6 +141,8 @@ public class Crear_Rol extends HttpServlet {
                         + "                        opt: option,\n"
                         + "                    }, function(responseText) {\n"
                         + "                        $(\"#tabla\").hide();\n"
+                        + "                          $(\"#moda\").hide();\n"
+                        + "                        $(\"#bot_atras\").show();\n"
                         + "                        $(\"#Updat\").html(responseText);\n"
                         + "                    });\n"
                         + "                });\n"

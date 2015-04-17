@@ -64,7 +64,7 @@
                 <table>
                     <%
                         Grupo gr = new Grupo();
-                        Mis_grupos=gr.cargar_grupos(Mis_grupos);
+                        Mis_grupos = gr.cargar_grupos(Mis_grupos);
                         Grupo temp = null;
                         out.println("<tr>");
                         out.println("<td>Codigo</td>");
@@ -76,8 +76,7 @@
                             out.println("<td>" + temp.getCodigo() + "</td>");
                             out.println("<td>" + temp.getNombre() + "</td>");
                             out.println("<td><input type=\"button\" class=\"btn btn-info\" value=\"Borrar\"  onclick=borrar_grup(" + temp.getCodigo() + ")></td> ");
-                            out.println("<td> <a href=\"#modal2\"  class=\"btn btn-success\"   data-toggle=\"modal\""
-                                    + " onclick=upd(" + temp.getCodigo() + ")>Update</a> </td>");
+                            out.println("<td> <a href=\"#modal2\"  class=\"btn btn-success\"   data-toggle=\"modal\"  onclick=upd(" + temp.getCodigo() + ")>Update</a> </td>");
                             out.println("</tr>");
                         }
                         control.cerrarConexion();
@@ -127,9 +126,8 @@
                         <div class="modal-body">
                             <form>
                                 <center>
-
                                     <%String nom = (String) session.getAttribute("descripcion_grupo");
-                                      out.println("<h1>" + nom + "</h1>");
+                                        out.println("<input type=\"text\" value="+nom+" id=\"upt_grupo\" />");
                                     %>
                                 </center>
 

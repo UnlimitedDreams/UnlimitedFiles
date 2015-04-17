@@ -515,7 +515,7 @@ public class Usuarios extends HttpServlet {
                     out.println("</tr>");
                 }
                 out.println("</table>");
-                out.println("<input type=\"button\" value=\"Guardar\" id=\"Guardar\">");
+               // out.println("<input type=\"button\" value=\"Guardar\" id=\"Guardar\">");
                 
 
             } catch (Exception ex) {

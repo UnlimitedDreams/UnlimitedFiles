@@ -9,6 +9,7 @@
         <script>
             $(document).ready(function() {
                 var option = 1;
+                $("#bot_atras").hide();
                 $.post('Crear_Rol', {
                     opt: option,
                 }, function(responseText) {
@@ -68,8 +69,8 @@
                 </div>
                 <br>
                 <br>
-                <a href="#modal1" class="btn btn-success"  data-toggle="modal" >Agregar</a>
-                <a href="New_Rol.html">Crear</a>
+                <a href="#modal1" class="btn btn-success" id="moda" data-toggle="modal" >Agregar</a>
+                <a href="Crud_roles.html" id="bot_atras">Atras</a>
             </center>
         </div>
     </div>
@@ -77,24 +78,30 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <center><h1> CREAR ROL</h1></center> 
+                    <center><h1> CREAR GRUPOS</h1></center> 
                 </div>
                 <!-- contenido modal-->
                 <div class="modal-body">
                     <form>
                         <center>
-                            <table>
-                                <tr>   
-                                    <td>
-                                        <h3>Nombre Rol   :</h3>
-                                    </td> 
-                                    <td>
-                                        <input type="text" placeholder="Nombre rol" class="form-control" id="nom"  style="width: 200px;" /> 
-                                    </td>    
-                                </tr> 
-                            </table>
+                            <input type="text" id="descrip_grupo">
+                            <br/>
+                            <input type="button" value="Crear" onclick="Crea()">
                         </center>
-                        <center>   <a href="#"  id="submit" class="btn btn-success"  data-toggle="modal" >Crear</a></center> 
+                        <script>
+                            function Crea() {
+                                $(document).ready(function() {
+                                    var option = 2;
+                                    var desc = $("#descrip_grupo").val();
+                                    $.post('Grupos', {
+                                        opt: option,
+                                        des: desc,
+                                    }, function(responseText) {
+                                        window.location.reload();
+                                    });
+                                });
+                            }
+                        </script>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -102,7 +109,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
 
 
 </body>
