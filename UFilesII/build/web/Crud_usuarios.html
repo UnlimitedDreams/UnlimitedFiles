@@ -1,0 +1,97 @@
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <title>UnlimitedFiles-Solicion Corporativa</title>
+        <link  href = "bootstrap-3.3.4/css/bootstrap.css"  rel = "stylesheet" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                var option = 3;
+                $.post('Usuarios', {
+                    opt: option,
+                }, function(responseText) {
+                    $('#tabla_usuarios').html(responseText);
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+    <nav  class = "navbar navbar-inverse navbar-fixed-top" > 
+        <div  class= "container-fluid" >
+            <div  class= "navbar-header" > 
+                <a  class= "navbar-brand"  href= "#" > 
+                    <img src= "img/text3338.png" style="width: 30px; height: 30px;"/> 
+                </a> 
+                <ul class="nav navbar-nav"> 
+                    <li> <a  href="https://www.facebook.com/sebazz.giraldo"><h5 style="color:#006400">Home</h5></a></li>
+                    <li><a href="http://getbootstrap.com/examples/starter-template/#"><h5 style="color:#006400">Productos</h5></a></li>
+                    <li><a href="http://getbootstrap.com/examples/starter-template/#"><h5 style="color:#006400">Contactos</h5></a></li>
+                </ul>                 
+            </div> 
+        </div> 
+    </nav>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="row">
+            <center>
+                <h4>UnlimitedFiles</h4>
+                <h5>
+                    Esta Seccion de Unlimited Files le permitira subir cualquier tipo de documento de una manera 
+                    muy segura para su organizacion solo debe darle click
+                </h5>
+                <br><br>
+                <div id="tabla_usuarios">
+                </div>
+                <br>
+                <br>
+                <div id="Updat_usu">
+                </div>
+                <br>
+                <br>
+                <a href="#modal1" class="btn btn-success"  data-toggle="modal" >Agregar</a>
+                <a href="Crear_usuario.html">Crear</a>
+            </center>
+        </div>
+    </div>
+    <div id="modal1" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <center><h1> CREAR ROL</h1></center> 
+                </div>
+                <!-- contenido modal-->
+                <div class="modal-body">
+                    <form>
+                        <center>
+                            <table>
+                                <tr>   
+                                    <td>
+                                        <h3>Nombre Rol   :</h3>
+                                    </td> 
+                                    <td>
+                                        <input type="text" placeholder="Nombre rol" class="form-control" id="nom"  style="width: 200px;" /> 
+                                    </td>    
+                                </tr> 
+                            </table>
+                        </center>
+                        <center>   <a href="#"  id="submit" class="btn btn-success"  data-toggle="modal" >Crear</a></center> 
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-dismiss="modal">cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
+
