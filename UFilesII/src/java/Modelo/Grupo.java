@@ -1,59 +1,49 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Modelo;
 
-import Control.control;
 import java.util.ArrayList;
+import javax.faces.context.FacesContext;
 
+/**
+ *
+ * @author USR_Toshiba
+ */
 public class Grupo {
-    private int codigo;
-    private String nombre;
+    private int cod;
+    private String Nombre;
+    
+    public Grupo(String Nombre) {
+        this.Nombre = Nombre;
+    }
+    
+    public String getNombre() {
+        return Nombre;
+    }
 
-    public Grupo(int codigo, String nombre) {
-        this.codigo = codigo;
-        this.nombre = nombre;
+    public int getCod() {
+        return cod;
+    }
+
+    public void setCod(int cod) {
+        this.cod = cod;
+    }
+  public Grupo(int cod, String Nombre) {
+        this.cod = cod;
+        this.Nombre = Nombre;
     }
 
     public Grupo() {
     }
     
-
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    @Override
-    public String toString() {
-        return "Grupo{" + "codigo=" + codigo + ", nombre=" + nombre + '}';
-    }
     
-    public ArrayList cargar_grupos(ArrayList x) throws ClassNotFoundException{
-        x.clear();
-        Control.control.conectar();
-        System.err.println("Entroooo");
-        control.ejecuteQuery("select * from Grupo where estado='Activo'");
-        int cod = 0;
-        String nom = "";
-        try {
-            while (control.rs.next()) {
-                cod = control.rs.getInt(1);
-                nom = control.rs.getString(2);
-                x.add(new Grupo(cod, nom));
-            }
-        } catch (Exception ex) {
-
-        }
-        return x;
+    public void setNombre(String Nombre) {
+        this.Nombre = Nombre;
     }
+
+   
+    
 }

@@ -3,56 +3,84 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package Modelo;
 
-import Control.control;
-import java.sql.Date;
-import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
- * @author USR_Toshiba
+ * @author Microinformatica
  */
 public class Usuario {
-
-    private String nickName;
     private String cedula;
     private String nombre;
-    private String Apellido;
-    private String Fecha_naci;
-    private String Sexo;
+    private String apellido;
+    private int rol;
+    private String rol_nom;
+    private String usuario;
+    private String correo;
+    private String password;
+    private Date Fecha_naci;
 
-    public Usuario(String cedula, String nombre, String Apellido, String Fecha_naci, String Sexo) {
+    public Usuario(String cedula, String nombre, String apellido, int rol, String rol_nom) {
         this.cedula = cedula;
         this.nombre = nombre;
-        this.Apellido = Apellido;
+        this.apellido = apellido;
+        this.rol = rol;
+        this.rol_nom = rol_nom;
+    }
+
+    public Usuario(String cedula, String nombre, String apellido, String rol_nom, String usuario, String correo, String password, Date Fecha_naci) {
+        this.cedula = cedula;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.rol_nom = rol_nom;
+        this.usuario = usuario;
+        this.correo = correo;
+        this.password = password;
         this.Fecha_naci = Fecha_naci;
-        this.Sexo = Sexo;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
-    public Usuario(String cedula, String nombre, String Apellido) {
-        this.cedula = cedula;
-        this.nombre = nombre;
-        this.Apellido = Apellido;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Date getFecha_naci() {
+        return Fecha_naci;
+    }
+
+    public void setFecha_naci(Date Fecha_naci) {
+        this.Fecha_naci = Fecha_naci;
+    }
+
+   
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "cedula=" + cedula + ", nombre=" + nombre + ", apellido=" + apellido + ", rol=" + rol + ", rol_nom=" + rol_nom + ", usuario=" + usuario + ", correo=" + correo + ", password=" + password + ", Fecha_naci=" + Fecha_naci + '}';
     }
     
-
-    public Usuario(String nickName, String cedula, String nombre, String Apellido, String Fecha_naci, String Sexo) {
-        this.nickName = nickName;
-        this.cedula = cedula;
-        this.nombre = nombre;
-        this.Apellido = Apellido;
-        this.Fecha_naci = Fecha_naci;
-        this.Sexo = Sexo;
-    }
+    
 
     public Usuario() {
     }
@@ -74,74 +102,29 @@ public class Usuario {
     }
 
     public String getApellido() {
-        return Apellido;
+        return apellido;
     }
 
-    public void setApellido(String Apellido) {
-        this.Apellido = Apellido;
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 
-    public String getFecha_naci() {
-        return Fecha_naci;
+    public int getRol() {
+        return rol;
     }
 
-    public void setFecha_naci(String Fecha_naci) {
-        this.Fecha_naci = Fecha_naci;
+    public void setRol(int rol) {
+        this.rol = rol;
     }
 
-    public String getSexo() {
-        return Sexo;
+    public String getRol_nom() {
+        return rol_nom;
     }
 
-    public void setSexo(String Sexo) {
-        this.Sexo = Sexo;
+    public void setRol_nom(String rol_nom) {
+        this.rol_nom = rol_nom;
     }
-
-    public ArrayList Traer_Usuarios(ArrayList Mis_usuarios) throws ClassNotFoundException {
-        Mis_usuarios.clear();
-        control.conectar();
-        control.ejecuteQuery("select * from persona where estado='Activo'");
-        int cod = 0;
-        String nom = "", apellido = "", sexo = "";
-        Date fecha = null;
-        try {
-            while (control.rs.next()) {
-                cod = control.rs.getInt(1);
-                nom = control.rs.getString(2);
-                fecha = control.rs.getDate(3);
-                apellido = control.rs.getString(4);
-                sexo = control.rs.getString(5);
-                Mis_usuarios.add(new Usuario("" + cod, nom, "" + fecha, apellido, sexo));
-            }
-        } catch (Exception ex) {
-            System.out.println("ex");
-        }
-
-        return Mis_usuarios;
-    }
-    public ArrayList Traer_UsuariosSinGrupo(ArrayList Mis_usuarios) throws ClassNotFoundException {
-        Mis_usuarios.clear();
-        control.conectar();
-        control.ejecuteQuery("select * from persona where estado='Activo'");
-        int cod = 0;
-        String nom = "", apellido = "", sexo = "";
-        Date fecha = null;
-        try {
-            while (control.rs.next()) {
-                cod = control.rs.getInt(1);
-                nom = control.rs.getString(2);
-                fecha = control.rs.getDate(3);
-                apellido = control.rs.getString(4);
-                sexo = control.rs.getString(5);
-                Mis_usuarios.add(new Usuario("" + cod, nom, "" + fecha, apellido, sexo));
-            }
-        } catch (Exception ex) {
-            System.out.println("ex");
-        }
-
-        return Mis_usuarios;
-    }
-        
-
-
+    
+    
+    
 }

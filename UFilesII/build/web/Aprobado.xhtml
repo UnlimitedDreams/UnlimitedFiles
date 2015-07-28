@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>UFiles</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link href="css/font-awesome.min.css" rel="stylesheet" />
+        <link href="css/animate.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="css/styles.css" />
+    </h:head>
+    <h:body onload="#{cargarArchivos.cargarGrupos()}">
+        <p:growl id="messages" showDetail="true" />
+        <nav class="navbar navbar-trans navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle top" data-toggle="collapse" data-target="#navbar-collapsible">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand text-success" href="menuAdm.xhtml">UF</a>
+                </div>
+                <div class="navbar-collapse collapse" id="navbar-collapsible">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li><a href="#"><i class="fa fa-folder-o"> Archivo</i></a></li>
+                        <li><a href="#"><i class="fa fa-cog"> Opciones</i></a></li>
+                        <li><a href="index.xhtml"><i class="fa fa-sign-out "> Salir</i></a></li>                       
+                        <li>&nbsp;</li>
+                    </ul>                   
+                </div>
+            </div>
+        </nav>
+
+        <section class="container-fluid" id="section6">
+            <div class="container-fluid">
+                <div class="row">                   
+                    <h3><i class="fa fa-user">USUARIO : <h:outputLabel value="#{menuBeans.nombre}"></h:outputLabel></i></h3> 
+                </div>
+            </div>
+        </section>
+
+        <section class="container-fluid" id="section2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3">
+
+                        <div class="panel panel-default slideInUp animate">
+                            <div class="panel-heading">
+                                <h4>Acciones de admistrador</h4></div>
+                            <div class="panel-body">
+                                <ol class="list">                                                                    
+                                    <li><h4  class="text-success"><i class="fa fa-male"> Usuarios</i></h4></li>
+                                    <hr></hr>
+                                    <li><a href="USUagregar.xhtml" style="color: black"><i class="fa fa-plus"> Agregar</i></a></li>
+                                    <li><a href="USUeliminar.xhtml" style="color: black"><i class="fa fa-trash-o"> Eliminar</i></a></li>
+                                    <li><a href="USUlistar.xhtml" style="color: black"><i class="fa fa-search"> Buscar</i></a></li>
+                                    <hr></hr>
+                                </ol>                            
+                                <ol class="list">
+                                    <li><h4  class="text-success"><i class="fa fa-male"> Roles</i></h4></li>
+                                    <hr></hr>
+                                    <li><a href="ROLagregar.xhtml" style="color: black"><i class="fa fa-plus"> Agregar</i></a></li>
+                                    <li><a href="ROLeliminar.xhtml" style="color: black"><i class="fa fa-trash-o"> Eliminar</i></a></li>
+                                    <li><a href="ROLlistar.xhtml" style="color: black"><i class="fa fa-search"> Buscar</i></a></li>
+                                    <hr></hr>
+                                </ol>
+                                <ol class="list"> 
+                                    <li><h4  class="text-success"><i class="fa fa-male"> Grupos</i></h4></li>
+                                    <hr></hr>
+                                    <li><a href="GRUagregar.xhtml" style="color: black"><i class="fa fa-plus"> Agregar</i></a></li>
+                                    <li><a href="GRUeliminar.xhtml" style="color: black"><i class="fa fa-trash-o"> Eliminar</i></a></li>
+                                    <li><a href="GRUlistar.xhtml" style="color: black"><i class="fa fa-search"> Buscar</i></a></li>
+                                    <hr></hr>
+                                </ol> 
+                                <ol class="list"> 
+                                    <li class="active"><h4  class="text-success"><i class="fa fa-file-text"> Archivos</i></h4></li>
+                                    <hr></hr>
+                                    <li class="active"><a href="ARCagregar.xhtml" style="color: black"><i class="fa fa-plus"> Agregar</i></a></li>
+                                    <li><a href="GRUeliminar.xhtml" style="color: black"><i class="fa fa-trash-o"> Eliminar</i></a></li>
+                                    <li ><a href="ARCbuscar.xhtml" style="color: black"><i class="fa fa-search"> Buscar</i></a></li>
+                                    <hr></hr>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-9">
+                        <div class="panel panel-default slideInUp animate">
+                            <div class="panel-heading">
+                                <h4>SUBIR ARCHIVOS</h4>
+                            </div>
+                            <div class="panel-body">
+                                <h:form enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Nombre</label>
+                                        <h:inputText value="#{cargarArchivos.nombre}" class="form-control input-lg"></h:inputText>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Descripcion</label>
+                                        <h:inputText value="#{cargarArchivos.descripcion}" class="form-control input-lg"></h:inputText>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputFile"> Fecha</label><br></br>
+                                        <input type="date" value="#{cargarArchivos.fecha}" class="form-control input-lg"></input>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputFile"> Archivo</label><br/>
+                                        <h:inputFile value="#{cargarArchivos.file1}" class="form-control input-lg"></h:inputFile>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputFile"> Grupo </label>
+                                        <h:selectOneMenu value="#{cargarArchivos.cod_grupo}"  class="form-control input-lg">
+                                            <f:selectItem itemLabel="Seleccione " itemValue="" class="form-control input-lg" />
+                                            <f:selectItems value="#{cargarArchivos.grup}" var="gru" itemLabel="#{gru.nombre}" itemValue="#{gru.cod}" class="form-control input-lg" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="form-group">
+                                        <h:commandButton value="GUARDAR" actionListener="#{cargarArchivos.upload()}" class="btn btn-succes btn-lg btn-block"></h:commandButton>
+                                    </div>
+
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <footer id="footer">
+            <div class="container">
+                <div class="row">
+                    <p class="text-muted text-center">Powered By Unlimited Dreams <br></br>Copyright &copy; Unlimited Dreams, Todos los derechos reservados.</p>
+                </div>
+                <br></br>
+                <p class="text-center text-muted">©2015</p>
+            </div>
+        </footer>
+
+        <div class="scroll-up">
+            <a href="#"><i class="fa fa-angle-up"></i></a>
+        </div>
+
+
+        <!--scripts loaded here-->
+
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/scripts.js"></script>
+
+    </h:body>
+</html>
+
